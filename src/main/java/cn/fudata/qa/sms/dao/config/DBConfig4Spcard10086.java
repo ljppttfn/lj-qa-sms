@@ -19,7 +19,7 @@ import javax.sql.DataSource;
  */
 
 @Configuration
-@MapperScan(basePackages = "cn.fudata.qa.sms.dao.spcard10086.mapper", sqlSessionTemplateRef = "SqlSessionTemplate4Spcard10086")
+@MapperScan(basePackages = "cn.fudata.qa.sms.dao.mapper.spcard10086", sqlSessionTemplateRef = "SqlSessionTemplate4Spcard10086")
 public class DBConfig4Spcard10086 {
 
     @Bean(name = "DB4Spcard10086")

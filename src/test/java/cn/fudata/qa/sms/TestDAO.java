@@ -1,14 +1,19 @@
 package cn.fudata.qa.sms;
 
-import cn.fudata.qa.sms.dao.spcard10010.mapper.CardPositionMapper;
-import cn.fudata.qa.sms.dao.spcard10010.model.CardPosition;
-import cn.fudata.qa.sms.dao.spcard10010.model.CardPositionExample;
+
+import cn.fudata.qa.sms.dao.mapper.spcard10010.CardPositionMapper;
+import cn.fudata.qa.sms.dao.mapper.spcard10010.SmsRecvMapper10010;
+import cn.fudata.qa.sms.dao.mapper.spcard10086.SmsRecvMapper10086;
+import cn.fudata.qa.sms.dao.model.CardPosition;
+import cn.fudata.qa.sms.dao.model.CardPositionExample;
+import cn.fudata.qa.sms.dao.model.SmsRecv;
+import cn.fudata.qa.sms.service.SMSService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -19,8 +24,20 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 public class TestDAO {
-    @Resource
+//    @Resource
+//    CardPositionMapper mapper;
+
+    @Autowired
     CardPositionMapper mapper;
+
+    @Autowired
+    SMSService smsService;
+
+    @Autowired
+    SmsRecvMapper10086 smsRecvMapper10086;
+
+    @Autowired
+    SmsRecvMapper10010 smsRecvMapper10010;
 
     @Test
     public void test(){
@@ -40,5 +57,20 @@ public class TestDAO {
         for(CardPosition cp: list){
             System.out.println(cp.getPhonum()+"  "+cp.getPwd() + " "+cp.getType());
         }
+    }
+
+    @Test
+    public void test_get_sms(){
+        String ctx = smsService.get_sms_latest("13244711160");
+        System.out.println(ctx);
+    }
+
+    @Test
+    public void test_3(){
+        SmsRecv res = smsRecvMapper10086.selectByPrimaryKey(1);
+        System.out.println(res);
+
+        SmsRecv res2 = smsRecvMapper10010.selectByPrimaryKey(1);
+        System.out.println(res2);
     }
 }

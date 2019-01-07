@@ -1,7 +1,7 @@
-package cn.fudata.qa.sms.dao.spcard10010.mapper;
+package cn.fudata.qa.sms.dao.spcard10086.mapper;
 
-import cn.fudata.qa.sms.dao.spcard10010.model.SmsSend;
-import cn.fudata.qa.sms.dao.spcard10010.model.SmsSendExample;
+import cn.fudata.qa.sms.dao.spcard10086.model.SmsSend;
+import cn.fudata.qa.sms.dao.spcard10086.model.SmsSendExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Arg;
 import org.apache.ibatis.annotations.ConstructorArgs;
@@ -17,7 +17,7 @@ import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.annotations.UpdateProvider;
 import org.apache.ibatis.type.JdbcType;
 
-public interface SmsSendMapper {
+public interface SmsSendMapper10086 {
     @SelectProvider(type=SmsSendSqlProvider.class, method="countByExample")
     long countByExample(SmsSendExample example);
 

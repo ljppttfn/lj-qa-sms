@@ -1,7 +1,7 @@
-package cn.fudata.qa.sms.dao.spcard10010.mapper;
+package cn.fudata.qa.sms.dao.spcard10000.mapper;
 
-import cn.fudata.qa.sms.dao.spcard10010.model.PortInfo;
-import cn.fudata.qa.sms.dao.spcard10010.model.PortInfoExample;
+import cn.fudata.qa.sms.dao.spcard10000.model.PortInfo;
+import cn.fudata.qa.sms.dao.spcard10000.model.PortInfoExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Arg;
 import org.apache.ibatis.annotations.ConstructorArgs;
@@ -17,7 +17,7 @@ import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.annotations.UpdateProvider;
 import org.apache.ibatis.type.JdbcType;
 
-public interface PortInfoMapper {
+public interface PortInfoMapper10000 {
     @SelectProvider(type=PortInfoSqlProvider.class, method="countByExample")
     long countByExample(PortInfoExample example);
 

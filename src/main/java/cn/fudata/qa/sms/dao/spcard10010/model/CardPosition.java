@@ -9,7 +9,7 @@ public class CardPosition {
 
     private String idcard;
 
-    private String name;
+    private String realname;
 
     private String type;
 
@@ -19,19 +19,19 @@ public class CardPosition {
 
     private Integer fee;
 
-    private String desc;
+    private String msg;
 
-    public CardPosition(Integer id, String phonum, String pwd, String idcard, String name, String type, Integer poolid, Integer portnum, Integer fee, String desc) {
+    public CardPosition(Integer id, String phonum, String pwd, String idcard, String realname, String type, Integer poolid, Integer portnum, Integer fee, String msg) {
         this.id = id;
         this.phonum = phonum;
         this.pwd = pwd;
         this.idcard = idcard;
-        this.name = name;
+        this.realname = realname;
         this.type = type;
         this.poolid = poolid;
         this.portnum = portnum;
         this.fee = fee;
-        this.desc = desc;
+        this.msg = msg;
     }
 
     public CardPosition() {
@@ -70,12 +70,12 @@ public class CardPosition {
         this.idcard = idcard == null ? null : idcard.trim();
     }
 
-    public String getName() {
-        return name;
+    public String getRealname() {
+        return realname;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setRealname(String realname) {
+        this.realname = realname == null ? null : realname.trim();
     }
 
     public String getType() {
@@ -110,11 +110,11 @@ public class CardPosition {
         this.fee = fee;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc == null ? null : desc.trim();
+    public void setMsg(String msg) {
+        this.msg = msg == null ? null : msg.trim();
     }
 }

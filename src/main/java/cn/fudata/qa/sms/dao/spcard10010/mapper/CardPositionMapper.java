@@ -32,13 +32,13 @@ public interface CardPositionMapper {
 
     @Insert({
         "insert into card_position (PhoNum, Pwd, ",
-        "IdCard, Name, Type, ",
-        "PoolID, PortNum, ",
-        "Fee, Desc)",
+        "IdCard, RealName, ",
+        "Type, PoolID, PortNum, ",
+        "Fee, Msg)",
         "values (#{phonum,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, ",
-        "#{idcard,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, ",
-        "#{poolid,jdbcType=INTEGER}, #{portnum,jdbcType=INTEGER}, ",
-        "#{fee,jdbcType=INTEGER}, #{desc,jdbcType=VARCHAR})"
+        "#{idcard,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, ",
+        "#{type,jdbcType=VARCHAR}, #{poolid,jdbcType=INTEGER}, #{portnum,jdbcType=INTEGER}, ",
+        "#{fee,jdbcType=INTEGER}, #{msg,jdbcType=VARCHAR})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Integer.class)
     int insert(CardPosition record);
@@ -53,18 +53,18 @@ public interface CardPositionMapper {
         @Arg(column="PhoNum", javaType=String.class, jdbcType=JdbcType.VARCHAR),
         @Arg(column="Pwd", javaType=String.class, jdbcType=JdbcType.VARCHAR),
         @Arg(column="IdCard", javaType=String.class, jdbcType=JdbcType.VARCHAR),
-        @Arg(column="Name", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+        @Arg(column="RealName", javaType=String.class, jdbcType=JdbcType.VARCHAR),
         @Arg(column="Type", javaType=String.class, jdbcType=JdbcType.VARCHAR),
         @Arg(column="PoolID", javaType=Integer.class, jdbcType=JdbcType.INTEGER),
         @Arg(column="PortNum", javaType=Integer.class, jdbcType=JdbcType.INTEGER),
         @Arg(column="Fee", javaType=Integer.class, jdbcType=JdbcType.INTEGER),
-        @Arg(column="Desc", javaType=String.class, jdbcType=JdbcType.VARCHAR)
+        @Arg(column="Msg", javaType=String.class, jdbcType=JdbcType.VARCHAR)
     })
     List<CardPosition> selectByExample(CardPositionExample example);
 
     @Select({
         "select",
-        "Id, PhoNum, Pwd, IdCard, Name, Type, PoolID, PortNum, Fee, Desc",
+        "Id, PhoNum, Pwd, IdCard, RealName, Type, PoolID, PortNum, Fee, Msg",
         "from card_position",
         "where Id = #{id,jdbcType=INTEGER}"
     })
@@ -73,14 +73,95 @@ public interface CardPositionMapper {
         @Arg(column="PhoNum", javaType=String.class, jdbcType=JdbcType.VARCHAR),
         @Arg(column="Pwd", javaType=String.class, jdbcType=JdbcType.VARCHAR),
         @Arg(column="IdCard", javaType=String.class, jdbcType=JdbcType.VARCHAR),
-        @Arg(column="Name", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+        @Arg(column="RealName", javaType=String.class, jdbcType=JdbcType.VARCHAR),
         @Arg(column="Type", javaType=String.class, jdbcType=JdbcType.VARCHAR),
         @Arg(column="PoolID", javaType=Integer.class, jdbcType=JdbcType.INTEGER),
         @Arg(column="PortNum", javaType=Integer.class, jdbcType=JdbcType.INTEGER),
         @Arg(column="Fee", javaType=Integer.class, jdbcType=JdbcType.INTEGER),
-        @Arg(column="Desc", javaType=String.class, jdbcType=JdbcType.VARCHAR)
+        @Arg(column="Msg", javaType=String.class, jdbcType=JdbcType.VARCHAR)
     })
     CardPosition selectByPrimaryKey(Integer id);
+
+
+    @Select({
+            "select",
+            "Id, PhoNum, Pwd, IdCard, RealName, Type, PoolID, PortNum, Fee, Msg",
+            "from card_position"
+    })
+    @ConstructorArgs({
+            @Arg(column="Id", javaType=Integer.class, jdbcType=JdbcType.INTEGER, id=true),
+            @Arg(column="PhoNum", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="Pwd", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="IdCard", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="RealName", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="Type", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="PoolID", javaType=Integer.class, jdbcType=JdbcType.INTEGER),
+            @Arg(column="PortNum", javaType=Integer.class, jdbcType=JdbcType.INTEGER),
+            @Arg(column="Fee", javaType=Integer.class, jdbcType=JdbcType.INTEGER),
+            @Arg(column="Msg", javaType=String.class, jdbcType=JdbcType.VARCHAR)
+    })
+    List<CardPosition> selectAll();
+
+    @Select({
+            "select",
+            "Id, PhoNum, Pwd, IdCard, RealName, Type, PoolID, PortNum, Fee, Msg",
+            "from card_position",
+            "where Type=10000"
+    })
+    @ConstructorArgs({
+            @Arg(column="Id", javaType=Integer.class, jdbcType=JdbcType.INTEGER, id=true),
+            @Arg(column="PhoNum", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="Pwd", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="IdCard", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="RealName", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="Type", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="PoolID", javaType=Integer.class, jdbcType=JdbcType.INTEGER),
+            @Arg(column="PortNum", javaType=Integer.class, jdbcType=JdbcType.INTEGER),
+            @Arg(column="Fee", javaType=Integer.class, jdbcType=JdbcType.INTEGER),
+            @Arg(column="Msg", javaType=String.class, jdbcType=JdbcType.VARCHAR)
+    })
+    List<CardPosition> selectAll10000();
+
+
+    @Select({
+            "select",
+            "Id, PhoNum, Pwd, IdCard, RealName, Type, PoolID, PortNum, Fee, Msg",
+            "from card_position",
+            "where Type=10010"
+    })
+    @ConstructorArgs({
+            @Arg(column="Id", javaType=Integer.class, jdbcType=JdbcType.INTEGER, id=true),
+            @Arg(column="PhoNum", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="Pwd", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="IdCard", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="RealName", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="Type", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="PoolID", javaType=Integer.class, jdbcType=JdbcType.INTEGER),
+            @Arg(column="PortNum", javaType=Integer.class, jdbcType=JdbcType.INTEGER),
+            @Arg(column="Fee", javaType=Integer.class, jdbcType=JdbcType.INTEGER),
+            @Arg(column="Msg", javaType=String.class, jdbcType=JdbcType.VARCHAR)
+    })
+    List<CardPosition> selectAll10010();
+
+    @Select({
+            "select",
+            "Id, PhoNum, Pwd, IdCard, RealName, Type, PoolID, PortNum, Fee, Msg",
+            "from card_position",
+            "where Type=10086"
+    })
+    @ConstructorArgs({
+            @Arg(column="Id", javaType=Integer.class, jdbcType=JdbcType.INTEGER, id=true),
+            @Arg(column="PhoNum", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="Pwd", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="IdCard", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="RealName", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="Type", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="PoolID", javaType=Integer.class, jdbcType=JdbcType.INTEGER),
+            @Arg(column="PortNum", javaType=Integer.class, jdbcType=JdbcType.INTEGER),
+            @Arg(column="Fee", javaType=Integer.class, jdbcType=JdbcType.INTEGER),
+            @Arg(column="Msg", javaType=String.class, jdbcType=JdbcType.VARCHAR)
+    })
+    List<CardPosition> selectAll10086();
 
     @UpdateProvider(type=CardPositionSqlProvider.class, method="updateByExampleSelective")
     int updateByExampleSelective(@Param("record") CardPosition record, @Param("example") CardPositionExample example);
@@ -96,12 +177,12 @@ public interface CardPositionMapper {
         "set PhoNum = #{phonum,jdbcType=VARCHAR},",
           "Pwd = #{pwd,jdbcType=VARCHAR},",
           "IdCard = #{idcard,jdbcType=VARCHAR},",
-          "Name = #{name,jdbcType=VARCHAR},",
+          "RealName = #{realname,jdbcType=VARCHAR},",
           "Type = #{type,jdbcType=VARCHAR},",
           "PoolID = #{poolid,jdbcType=INTEGER},",
           "PortNum = #{portnum,jdbcType=INTEGER},",
           "Fee = #{fee,jdbcType=INTEGER},",
-          "Desc = #{desc,jdbcType=VARCHAR}",
+          "Msg = #{msg,jdbcType=VARCHAR}",
         "where Id = #{id,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(CardPosition record);

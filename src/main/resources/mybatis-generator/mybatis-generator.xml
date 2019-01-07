@@ -21,7 +21,7 @@
 
         <jdbcConnection
                 driverClass="com.mysql.jdbc.Driver"
-                connectionURL="jdbc:mysql://172.16.85.36:3306/spcard10086"
+                connectionURL="jdbc:mysql://172.16.67.202:3306/spcard"
                 userId="root"
                 password="root">
         </jdbcConnection>
@@ -32,7 +32,7 @@
         </javaTypeResolver>
 
         <!-- 生成model模型，对应的包，存放位置可以指定具体的路径,如/ProjectName/src，也可以使用MAVEN来自动生成 -->
-        <javaModelGenerator targetPackage="cn.fudata.qa.sms.dao.spcard10086.model" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="cn.fudata.qa.sms.dao.spcard10010.model" targetProject="src/main/java">
             <!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false -->
             <property name="enableSubPackages" value="false"/>
             <property name="constructorBased" value="true"/>
@@ -47,23 +47,22 @@
         <!--</sqlMapGenerator>-->
 
          <!--对应的dao接口-->
-        <javaClientGenerator targetPackage="cn.fudata.qa.sms.dao.spcard10086.mapper" targetProject="src/main/java" type="ANNOTATEDMAPPER">
+        <javaClientGenerator targetPackage="cn.fudata.qa.sms.dao.spcard10010.mapper" targetProject="src/main/java" type="ANNOTATEDMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
         <!-- 表名对应生成的实体 -->
-        <!--<table tableName="card_position">-->
+        <table tableName="card_position">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <!--<table tableName="sms_recv">-->
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-            <!--&lt;!&ndash;<generatedKey column="app_id" sqlStatement="MySql" identity="true"/>&ndash;&gt;-->
         <!--</table>-->
-        <table tableName="sms_recv">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="sms_send">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="port_info">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
+        <!--<table tableName="sms_send">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="port_info">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
     </context>
 </generatorConfiguration>

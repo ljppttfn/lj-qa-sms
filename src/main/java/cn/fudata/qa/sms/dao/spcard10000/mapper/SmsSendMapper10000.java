@@ -17,7 +17,7 @@ import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.annotations.UpdateProvider;
 import org.apache.ibatis.type.JdbcType;
 
-public interface SmsSendMapper {
+public interface SmsSendMapper10000 {
     @SelectProvider(type=SmsSendSqlProvider.class, method="countByExample")
     long countByExample(SmsSendExample example);
 

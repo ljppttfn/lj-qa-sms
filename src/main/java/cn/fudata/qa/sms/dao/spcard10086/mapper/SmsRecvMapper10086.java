@@ -1,7 +1,7 @@
-package cn.fudata.qa.sms.dao.spcard10000.mapper;
+package cn.fudata.qa.sms.dao.spcard10086.mapper;
 
-import cn.fudata.qa.sms.dao.spcard10000.model.SmsRecv;
-import cn.fudata.qa.sms.dao.spcard10000.model.SmsRecvExample;
+import cn.fudata.qa.sms.dao.spcard10086.model.SmsRecv;
+import cn.fudata.qa.sms.dao.spcard10086.model.SmsRecvExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Arg;
 import org.apache.ibatis.annotations.ConstructorArgs;
@@ -17,7 +17,7 @@ import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.annotations.UpdateProvider;
 import org.apache.ibatis.type.JdbcType;
 
-public interface SmsRecvMapper {
+public interface SmsRecvMapper10086 {
     @SelectProvider(type=SmsRecvSqlProvider.class, method="countByExample")
     long countByExample(SmsRecvExample example);
 

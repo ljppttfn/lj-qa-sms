@@ -40,8 +40,8 @@ public class CardPositionSqlProvider {
             sql.VALUES("IdCard", "#{idcard,jdbcType=VARCHAR}");
         }
         
-        if (record.getName() != null) {
-            sql.VALUES("Name", "#{name,jdbcType=VARCHAR}");
+        if (record.getRealname() != null) {
+            sql.VALUES("RealName", "#{realname,jdbcType=VARCHAR}");
         }
         
         if (record.getType() != null) {
@@ -60,8 +60,8 @@ public class CardPositionSqlProvider {
             sql.VALUES("Fee", "#{fee,jdbcType=INTEGER}");
         }
         
-        if (record.getDesc() != null) {
-            sql.VALUES("Desc", "#{desc,jdbcType=VARCHAR}");
+        if (record.getMsg() != null) {
+            sql.VALUES("Msg", "#{msg,jdbcType=VARCHAR}");
         }
         
         return sql.toString();
@@ -77,12 +77,12 @@ public class CardPositionSqlProvider {
         sql.SELECT("PhoNum");
         sql.SELECT("Pwd");
         sql.SELECT("IdCard");
-        sql.SELECT("Name");
+        sql.SELECT("RealName");
         sql.SELECT("Type");
         sql.SELECT("PoolID");
         sql.SELECT("PortNum");
         sql.SELECT("Fee");
-        sql.SELECT("Desc");
+        sql.SELECT("Msg");
         sql.FROM("card_position");
         applyWhere(sql, example, false);
         
@@ -116,8 +116,8 @@ public class CardPositionSqlProvider {
             sql.SET("IdCard = #{record.idcard,jdbcType=VARCHAR}");
         }
         
-        if (record.getName() != null) {
-            sql.SET("Name = #{record.name,jdbcType=VARCHAR}");
+        if (record.getRealname() != null) {
+            sql.SET("RealName = #{record.realname,jdbcType=VARCHAR}");
         }
         
         if (record.getType() != null) {
@@ -136,8 +136,8 @@ public class CardPositionSqlProvider {
             sql.SET("Fee = #{record.fee,jdbcType=INTEGER}");
         }
         
-        if (record.getDesc() != null) {
-            sql.SET("Desc = #{record.desc,jdbcType=VARCHAR}");
+        if (record.getMsg() != null) {
+            sql.SET("Msg = #{record.msg,jdbcType=VARCHAR}");
         }
         
         applyWhere(sql, example, true);
@@ -152,12 +152,12 @@ public class CardPositionSqlProvider {
         sql.SET("PhoNum = #{record.phonum,jdbcType=VARCHAR}");
         sql.SET("Pwd = #{record.pwd,jdbcType=VARCHAR}");
         sql.SET("IdCard = #{record.idcard,jdbcType=VARCHAR}");
-        sql.SET("Name = #{record.name,jdbcType=VARCHAR}");
+        sql.SET("RealName = #{record.realname,jdbcType=VARCHAR}");
         sql.SET("Type = #{record.type,jdbcType=VARCHAR}");
         sql.SET("PoolID = #{record.poolid,jdbcType=INTEGER}");
         sql.SET("PortNum = #{record.portnum,jdbcType=INTEGER}");
         sql.SET("Fee = #{record.fee,jdbcType=INTEGER}");
-        sql.SET("Desc = #{record.desc,jdbcType=VARCHAR}");
+        sql.SET("Msg = #{record.msg,jdbcType=VARCHAR}");
         
         CardPositionExample example = (CardPositionExample) parameter.get("example");
         applyWhere(sql, example, true);
@@ -180,8 +180,8 @@ public class CardPositionSqlProvider {
             sql.SET("IdCard = #{idcard,jdbcType=VARCHAR}");
         }
         
-        if (record.getName() != null) {
-            sql.SET("Name = #{name,jdbcType=VARCHAR}");
+        if (record.getRealname() != null) {
+            sql.SET("RealName = #{realname,jdbcType=VARCHAR}");
         }
         
         if (record.getType() != null) {
@@ -200,8 +200,8 @@ public class CardPositionSqlProvider {
             sql.SET("Fee = #{fee,jdbcType=INTEGER}");
         }
         
-        if (record.getDesc() != null) {
-            sql.SET("Desc = #{desc,jdbcType=VARCHAR}");
+        if (record.getMsg() != null) {
+            sql.SET("Msg = #{msg,jdbcType=VARCHAR}");
         }
         
         sql.WHERE("Id = #{id,jdbcType=INTEGER}");

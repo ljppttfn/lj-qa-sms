@@ -4,7 +4,7 @@
 - 通过Api 方式获取各短信
 - 通过PC+软件方式 实现拨号及造流量
 
-Swagger 接口地址：
+Swagger 接口地址：http://fudata-qa-sms.wodlee-qa.k2-test.fudata.info/swagger-ui.html
 
 
 ## 注意事项

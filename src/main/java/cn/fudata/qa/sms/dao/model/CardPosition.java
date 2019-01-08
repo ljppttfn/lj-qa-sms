@@ -21,7 +21,11 @@ public class CardPosition {
 
     private String msg;
 
-    public CardPosition(Integer id, String phonum, String pwd, String idcard, String realname, String type, Integer poolid, Integer portnum, Integer fee, String msg) {
+    private String province;
+
+    private String city;
+
+    public CardPosition(Integer id, String phonum, String pwd, String idcard, String realname, String type, Integer poolid, Integer portnum, Integer fee, String msg, String province, String city) {
         this.id = id;
         this.phonum = phonum;
         this.pwd = pwd;
@@ -32,6 +36,8 @@ public class CardPosition {
         this.portnum = portnum;
         this.fee = fee;
         this.msg = msg;
+        this.province = province;
+        this.city = city;
     }
 
     public CardPosition() {
@@ -116,5 +122,21 @@ public class CardPosition {
 
     public void setMsg(String msg) {
         this.msg = msg == null ? null : msg.trim();
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province == null ? null : province.trim();
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city == null ? null : city.trim();
     }
 }

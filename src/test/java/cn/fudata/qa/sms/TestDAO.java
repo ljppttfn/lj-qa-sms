@@ -8,6 +8,8 @@ import cn.fudata.qa.sms.dao.model.CardPosition;
 import cn.fudata.qa.sms.dao.model.CardPositionExample;
 import cn.fudata.qa.sms.dao.model.SmsRecv;
 import cn.fudata.qa.sms.service.SMSService;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,7 @@ public class TestDAO {
 //    CardPositionMapper mapper;
 
     @Autowired
-    CardPositionMapper mapper;
+    CardPositionMapper cardPositionMapper;
 
     @Autowired
     SMSService smsService;
@@ -41,7 +43,9 @@ public class TestDAO {
 
     @Test
     public void test(){
-        List<CardPosition> list = mapper.selectAll();
+        CardPositionExample example = new CardPositionExample();
+        example.createCriteria();
+        List<CardPosition> list = cardPositionMapper.selectByExample(example);
         System.out.println(list.size());
         for(CardPosition cp: list){
             System.out.println(cp.getPhonum()+"  "+cp.getPwd() + " "+cp.getType());
@@ -53,7 +57,7 @@ public class TestDAO {
     public void test2(){
         CardPositionExample example = new CardPositionExample();
         example.createCriteria().andIdLessThan(100);
-        List<CardPosition> list = mapper.selectByExample(example);
+        List<CardPosition> list = cardPositionMapper.selectByExample(example);
         for(CardPosition cp: list){
             System.out.println(cp.getPhonum()+"  "+cp.getPwd() + " "+cp.getType());
         }
@@ -61,16 +65,22 @@ public class TestDAO {
 
     @Test
     public void test_get_sms(){
-        String ctx = smsService.get_sms_latest("13244711160");
+        SmsRecv ctx = smsService.get_sms_latest("13244711160");
         System.out.println(ctx);
     }
 
     @Test
     public void test_3(){
-        SmsRecv res = smsRecvMapper10086.selectByPrimaryKey(1);
-        System.out.println(res);
+//        SmsRecv res = smsRecvMapper10086.selectByPrimaryKey(1);
+//        System.out.println(res);
+//
+//        SmsRecv res2 = smsRecvMapper10010.selectByPrimaryKey(1);
+//        System.out.println(res2.toString());
+//        JSONObject json = JSONObject.parseObject(res2.toString());
+//        System.out.println(json.toJSONString());
 
-        SmsRecv res2 = smsRecvMapper10010.selectByPrimaryKey(1);
-        System.out.println(res2);
+        List<SmsRecv> res2 = smsRecvMapper10010.selectByPort(53);
+        String s = JSON.toJSONString(res2);
+        System.out.println(s);
     }
 }

@@ -64,6 +64,14 @@ public class CardPositionSqlProvider {
             sql.VALUES("Msg", "#{msg,jdbcType=VARCHAR}");
         }
         
+        if (record.getProvince() != null) {
+            sql.VALUES("Province", "#{province,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getCity() != null) {
+            sql.VALUES("City", "#{city,jdbcType=VARCHAR}");
+        }
+        
         return sql.toString();
     }
 
@@ -83,6 +91,8 @@ public class CardPositionSqlProvider {
         sql.SELECT("PortNum");
         sql.SELECT("Fee");
         sql.SELECT("Msg");
+        sql.SELECT("Province");
+        sql.SELECT("City");
         sql.FROM("card_position");
         applyWhere(sql, example, false);
         
@@ -140,6 +150,14 @@ public class CardPositionSqlProvider {
             sql.SET("Msg = #{record.msg,jdbcType=VARCHAR}");
         }
         
+        if (record.getProvince() != null) {
+            sql.SET("Province = #{record.province,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getCity() != null) {
+            sql.SET("City = #{record.city,jdbcType=VARCHAR}");
+        }
+        
         applyWhere(sql, example, true);
         return sql.toString();
     }
@@ -158,6 +176,8 @@ public class CardPositionSqlProvider {
         sql.SET("PortNum = #{record.portnum,jdbcType=INTEGER}");
         sql.SET("Fee = #{record.fee,jdbcType=INTEGER}");
         sql.SET("Msg = #{record.msg,jdbcType=VARCHAR}");
+        sql.SET("Province = #{record.province,jdbcType=VARCHAR}");
+        sql.SET("City = #{record.city,jdbcType=VARCHAR}");
         
         CardPositionExample example = (CardPositionExample) parameter.get("example");
         applyWhere(sql, example, true);
@@ -202,6 +222,14 @@ public class CardPositionSqlProvider {
         
         if (record.getMsg() != null) {
             sql.SET("Msg = #{msg,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getProvince() != null) {
+            sql.SET("Province = #{province,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getCity() != null) {
+            sql.SET("City = #{city,jdbcType=VARCHAR}");
         }
         
         sql.WHERE("Id = #{id,jdbcType=INTEGER}");

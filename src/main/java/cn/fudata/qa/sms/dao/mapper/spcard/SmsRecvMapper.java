@@ -80,7 +80,8 @@ public interface SmsRecvMapper {
             "select",
             "Id, PortNum, PhoNum, IMSI, ICCID, smsDate, smsNumber, smsContent",
             "from sms_recv",
-            "where PortNum = #{portNum,jdbcType=INTEGER}"
+            "where PortNum = #{portNum,jdbcType=INTEGER}",
+            "order by id desc"
     })
     @ConstructorArgs({
             @Arg(column="Id", javaType=Integer.class, jdbcType=JdbcType.INTEGER, id=true),
@@ -93,6 +94,25 @@ public interface SmsRecvMapper {
             @Arg(column="smsContent", javaType=String.class, jdbcType=JdbcType.VARCHAR)
     })
     List<SmsRecv> selectByPort(Integer portNum);
+
+    @Select({
+            "select",
+            "Id, PortNum, PhoNum, IMSI, ICCID, smsDate, smsNumber, smsContent",
+            "from sms_recv",
+            "where PortNum = #{portNum,jdbcType=INTEGER}",
+            "order by id desc limit 5"
+    })
+    @ConstructorArgs({
+            @Arg(column="Id", javaType=Integer.class, jdbcType=JdbcType.INTEGER, id=true),
+            @Arg(column="PortNum", javaType=Integer.class, jdbcType=JdbcType.INTEGER),
+            @Arg(column="PhoNum", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="IMSI", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="ICCID", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="smsDate", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="smsNumber", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="smsContent", javaType=String.class, jdbcType=JdbcType.VARCHAR)
+    })
+    List<SmsRecv> selectLast5ByPort(Integer portNum);
 
     @Select({
             "select",

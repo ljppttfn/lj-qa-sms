@@ -9,11 +9,19 @@ public enum PhoneNumberType {
     CARD10086("10086", "移动"),
     CARD10000("10000", "电信");
 
-    String code;
-    String desc;
+    private String code;
+    private String desc;
 
     PhoneNumberType(String code, String desc){
         this.code=code;
         this.desc=desc;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getDesc() {
+        return desc;
     }
 }

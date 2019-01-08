@@ -47,7 +47,7 @@
         <!--</sqlMapGenerator>-->
 
          <!--对应的dao接口-->
-        <javaClientGenerator targetPackage="cn.fudata.qa.sms.dao.spcard10010.mapper" targetProject="src/main/java" type="ANNOTATEDMAPPER">
+        <javaClientGenerator targetPackage="cn.fudata.qa.sms.dao.mapper.spcard" targetProject="src/main/java" type="ANNOTATEDMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 

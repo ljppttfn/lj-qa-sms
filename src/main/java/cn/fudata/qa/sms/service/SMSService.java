@@ -10,6 +10,8 @@ import cn.fudata.qa.sms.dao.model.CardPosition;
 import cn.fudata.qa.sms.dao.model.SmsRecv;
 import cn.fudata.qa.sms.dao.mapper.spcard10086.SmsRecvMapper10086;
 import cn.fudata.qa.sms.dao.model.SmsSend;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,7 @@ import java.util.List;
  */
 @Service
 public class SMSService {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final
     CardPositionMapper cardPositionMapper;
@@ -63,6 +66,7 @@ public class SMSService {
     public SmsRecv get_sms_latest(String phoNum) {
         CardPosition cp = cardPositionMapper.selectByPhoNum(phoNum);
         if (cp == null) {
+            logger.info("手机号 {} 非猫池中的手机号，请检查！", phoNum);
             return null;
         }
         SmsRecv sms_list;
@@ -80,6 +84,7 @@ public class SMSService {
                 return null;
         }
         if (sms_list == null) {
+            logger.info("手机号 {} 无短信", phoNum);
             return null;
         } else {
             return sms_list;
@@ -95,6 +100,7 @@ public class SMSService {
     public List<SmsRecv> get_sms_all(String phoNum){
         CardPosition cp = cardPositionMapper.selectByPhoNum(phoNum);
         if (cp == null) {
+            logger.info("手机号 {} 非猫池中的手机号，请检查！", phoNum);
             return null;
         }
         List<SmsRecv> sms_list;
@@ -112,6 +118,7 @@ public class SMSService {
                 return null;
         }
         if (sms_list == null || sms_list.size() == 0) {
+            logger.info("手机号 {} 无短信", phoNum);
             return null;
         } else {
             return sms_list;
@@ -127,6 +134,7 @@ public class SMSService {
     public List<SmsRecv> get_sms_last5(String phoNum){
         CardPosition cp = cardPositionMapper.selectByPhoNum(phoNum);
         if (cp == null) {
+            logger.info("手机号 {} 非猫池中的手机号，请检查！", phoNum);
             return null;
         }
         List<SmsRecv> sms_list;
@@ -144,6 +152,7 @@ public class SMSService {
                 return null;
         }
         if (sms_list == null || sms_list.size() == 0) {
+            logger.info("手机号 {} 无短信", phoNum);
             return null;
         } else {
             return sms_list;
@@ -161,6 +170,7 @@ public class SMSService {
     public boolean send_sms(String fromPhoNum,String toPhoNum, String text){
         CardPosition cp = cardPositionMapper.selectByPhoNum(fromPhoNum);
         if (cp == null) {
+            logger.info("手机号 {} 非猫池中的手机号，请检查！", fromPhoNum);
             return false;
         }
 

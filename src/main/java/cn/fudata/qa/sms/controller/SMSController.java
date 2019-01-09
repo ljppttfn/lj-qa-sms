@@ -55,6 +55,7 @@ public class SMSController {
      * @param body json格式
      * @return boolean
      */
+    @ApiOperation(value = "发送短信-测试3")
     @PostMapping(value = "/send3")
     public boolean send3(@RequestBody Map<String, Object> body) {
         String fromPhoNum = body.get("from").toString();
@@ -71,7 +72,7 @@ public class SMSController {
      * @param text smsText
      * @return boolean
      */
-    @ApiOperation(value = "发送短信2")
+    @ApiOperation(value = "发送短信-测试2")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "from", value = "短信发送方号码", required = true, dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "to", value = "短信接收方号码", required = true, dataType = "String", paramType = "query"),
@@ -87,7 +88,7 @@ public class SMSController {
      * @param smsSendRequestVo body对象
      * @return boolean
      */
-    @ApiOperation(value = "发送短信3", produces="application/json")
+    @ApiOperation(value = "发送短信", produces="application/json")
     @ApiImplicitParam(name = "smsSendRequestVo", value = "短信发送对象", required = true, dataType = "SmsSendRequestVo")
     @PostMapping(value = "/send")
     public boolean send(@RequestBody SmsSendRequestVo smsSendRequestVo) {

@@ -9,12 +9,15 @@ import cn.fudata.qa.sms.dao.mapper.spcard10086.SmsSendMapper10086;
 import cn.fudata.qa.sms.dao.model.CardPosition;
 import cn.fudata.qa.sms.dao.model.SmsRecv;
 import cn.fudata.qa.sms.dao.mapper.spcard10086.SmsRecvMapper10086;
+import cn.fudata.qa.sms.dao.model.SmsRecvExample;
 import cn.fudata.qa.sms.dao.model.SmsSend;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -93,11 +96,58 @@ public class SMSService {
 
 
     /**
+     * 根据手机号获取5min内的最新的一条短信
+     *
+     * @param phoNum phoneNumber
+     * @return smsContent
+     */
+    public SmsRecv get_sms_latest_in5min(String phoNum) {
+        CardPosition cp = cardPositionMapper.selectByPhoNum(phoNum);
+        if (cp == null) {
+            logger.info("手机号 {} 非猫池中的手机号，请检查！", phoNum);
+            return null;
+        }
+
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String beginData = LocalDateTime.now().minusMinutes(500).format(formatter);
+
+
+        SmsRecvExample example = new SmsRecvExample();
+        example.createCriteria().andPortnumEqualTo(cp.getPortnum())
+                .andSmsdateGreaterThan(beginData);
+        example.setOrderByClause("smsdate desc");
+
+        List<SmsRecv> sms_list;
+        switch (cp.getType()) {
+            case "10000":
+                sms_list = smsRecvMapper10000.selectByExample(example);
+                break;
+            case "10010":
+                sms_list = smsRecvMapper10010.selectByExample(example);
+                break;
+            case "10086":
+                sms_list = smsRecvMapper10086.selectByExample(example);
+                break;
+            default:
+                return null;
+        }
+        if (sms_list == null || sms_list.size() == 0) {
+            logger.info("手机号 {} 在最近的5min内无短信", phoNum);
+            return null;
+        } else {
+            return sms_list.get(0);
+        }
+    }
+
+
+    /**
      * 根据手机号码，查询所有短信
+     *
      * @param phoNum phoneNumber
      * @return sms list
      */
-    public List<SmsRecv> get_sms_all(String phoNum){
+    public List<SmsRecv> get_sms_all(String phoNum) {
         CardPosition cp = cardPositionMapper.selectByPhoNum(phoNum);
         if (cp == null) {
             logger.info("手机号 {} 非猫池中的手机号，请检查！", phoNum);
@@ -106,7 +156,7 @@ public class SMSService {
         List<SmsRecv> sms_list;
         switch (cp.getType()) {
             case "10000":
-                sms_list = smsRecvMapper10000.selectByPort(cp.getPortnum()) ;
+                sms_list = smsRecvMapper10000.selectByPort(cp.getPortnum());
                 break;
             case "10010":
                 sms_list = smsRecvMapper10010.selectByPort(cp.getPortnum());
@@ -128,10 +178,11 @@ public class SMSService {
 
     /**
      * 获取最新5条短信
+     *
      * @param phoNum phoneNumber
      * @return sms list
      */
-    public List<SmsRecv> get_sms_last5(String phoNum){
+    public List<SmsRecv> get_sms_last5(String phoNum) {
         CardPosition cp = cardPositionMapper.selectByPhoNum(phoNum);
         if (cp == null) {
             logger.info("手机号 {} 非猫池中的手机号，请检查！", phoNum);
@@ -140,7 +191,7 @@ public class SMSService {
         List<SmsRecv> sms_list;
         switch (cp.getType()) {
             case "10000":
-                sms_list = smsRecvMapper10000.selectLast5ByPort(cp.getPortnum()) ;
+                sms_list = smsRecvMapper10000.selectLast5ByPort(cp.getPortnum());
                 break;
             case "10010":
                 sms_list = smsRecvMapper10010.selectLast5ByPort(cp.getPortnum());
@@ -162,19 +213,20 @@ public class SMSService {
 
     /**
      * 插入短信，手动配置 发送方号码、接收方号码，及短信内容
+     *
      * @param fromPhoNum 发送方号码
-     * @param toPhoNum 接收方号码
-     * @param text 短信内容
+     * @param toPhoNum   接收方号码
+     * @param text       短信内容
      * @return boolean，成功true，失败false
      */
-    public boolean send_sms(String fromPhoNum,String toPhoNum, String text){
+    public boolean send_sms(String fromPhoNum, String toPhoNum, String text) {
         CardPosition cp = cardPositionMapper.selectByPhoNum(fromPhoNum);
         if (cp == null) {
             logger.info("手机号 {} 非猫池中的手机号，请检查！", fromPhoNum);
             return false;
         }
 
-        SmsSend smsSend=new SmsSend();
+        SmsSend smsSend = new SmsSend();
         smsSend.setPortnum(cp.getPortnum());
         smsSend.setSmsnumber(toPhoNum);
         smsSend.setSmscontent(text);

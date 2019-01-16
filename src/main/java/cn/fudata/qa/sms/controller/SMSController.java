@@ -30,6 +30,14 @@ public class SMSController {
         return smsService.get_sms_latest(phoNum);
     }
 
+
+    @ApiOperation(value = "获取5min内最新一条短信")
+    @ApiImplicitParam(name = "phoNum", value = "手机号", required = true, dataType = "String", paramType = "path")
+    @GetMapping(value = "/getLatestIn5Min/{phoNum}")
+    public SmsRecv get_latest_sms_by_phone_in5min(@PathVariable("phoNum") String phoNum) {
+        return smsService.get_sms_latest_in5min(phoNum);
+    }
+
     @ApiOperation(value = "获取最新5条短信")
     @ApiImplicitParam(name = "phoNum", value = "手机号", required = true, dataType = "String", paramType = "path")
     @GetMapping(value = "/getLatest5/{phoNum}")

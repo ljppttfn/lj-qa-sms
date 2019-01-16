@@ -71,16 +71,7 @@ public class TestDAO {
 
     @Test
     public void test_3(){
-//        SmsRecv res = smsRecvMapper10086.selectByPrimaryKey(1);
-//        System.out.println(res);
-//
-//        SmsRecv res2 = smsRecvMapper10010.selectByPrimaryKey(1);
-//        System.out.println(res2.toString());
-//        JSONObject json = JSONObject.parseObject(res2.toString());
-//        System.out.println(json.toJSONString());
-
-        List<SmsRecv> res2 = smsRecvMapper10010.selectByPort(53);
-        String s = JSON.toJSONString(res2);
-        System.out.println(s);
+        SmsRecv res = smsService.get_sms_latest_in5min("15511963903");
+        System.out.println(JSON.toJSONString(res));
     }
 }

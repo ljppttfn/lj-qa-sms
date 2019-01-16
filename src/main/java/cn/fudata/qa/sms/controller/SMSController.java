@@ -3,7 +3,6 @@ package cn.fudata.qa.sms.controller;
 import cn.fudata.qa.sms.dao.model.SmsRecv;
 import cn.fudata.qa.sms.model.SmsSendRequestVo;
 import cn.fudata.qa.sms.service.SMSService;
-import com.alibaba.fastjson.JSON;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,25 +26,22 @@ public class SMSController {
     @ApiOperation(value = "获取最新一条短信")
     @ApiImplicitParam(name = "phoNum", value = "手机号", required = true, dataType = "String", paramType = "path")
     @GetMapping(value = "/getLatest/{phoNum}")
-    public String get_latest_sms_by_phone(@PathVariable("phoNum") String phoNum) {
-        SmsRecv sms = smsService.get_sms_latest(phoNum);
-        return JSON.toJSONString(sms);
+    public SmsRecv get_latest_sms_by_phone(@PathVariable("phoNum") String phoNum) {
+        return smsService.get_sms_latest(phoNum);
     }
 
     @ApiOperation(value = "获取最新5条短信")
     @ApiImplicitParam(name = "phoNum", value = "手机号", required = true, dataType = "String", paramType = "path")
     @GetMapping(value = "/getLatest5/{phoNum}")
-    public String get_last5_sms_by_phone(@PathVariable("phoNum") String phoNum) {
-        List<SmsRecv> sms_all = smsService.get_sms_last5(phoNum);
-        return JSON.toJSONString(sms_all);
+    public List<SmsRecv> get_last5_sms_by_phone(@PathVariable("phoNum") String phoNum) {
+        return smsService.get_sms_last5(phoNum);
     }
 
     @ApiOperation(value = "获取所有短信")
     @ApiImplicitParam(name = "phoNum", value = "手机号", required = true, dataType = "String", paramType = "path")
     @GetMapping(value = "/getAll/{phoNum}")
-    public String get_all_sms_by_phone(@PathVariable("phoNum") String phoNum) {
-        List<SmsRecv> sms_all = smsService.get_sms_all(phoNum);
-        return JSON.toJSONString(sms_all);
+    public List<SmsRecv> get_all_sms_by_phone(@PathVariable("phoNum") String phoNum) {
+        return smsService.get_sms_all(phoNum);
     }
 
     /**

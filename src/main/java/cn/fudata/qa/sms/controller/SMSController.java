@@ -23,7 +23,7 @@ public class SMSController {
     @Autowired
     SMSService smsService;
 
-    @ApiOperation(value = "获取最新一条短信")
+    @ApiOperation(value = "获取最新一条完整的短信：猫池可能拆分一条短信，此处返回聚合后的完整短信")
     @ApiImplicitParam(name = "phoNum", value = "手机号", required = true, dataType = "String", paramType = "path")
     @GetMapping(value = "/getLatest/{phoNum}")
     public SmsRecv get_latest_sms_by_phone(@PathVariable("phoNum") String phoNum) {
@@ -31,21 +31,21 @@ public class SMSController {
     }
 
 
-    @ApiOperation(value = "获取5min内最新一条短信")
+    @ApiOperation(value = "获取5min内最新一条短信：猫池可能拆分一条短信，此处返回聚合后的完整短信")
     @ApiImplicitParam(name = "phoNum", value = "手机号", required = true, dataType = "String", paramType = "path")
     @GetMapping(value = "/getLatestIn5Min/{phoNum}")
     public SmsRecv get_latest_sms_by_phone_in5min(@PathVariable("phoNum") String phoNum) {
         return smsService.get_sms_latest_in5min(phoNum);
     }
 
-    @ApiOperation(value = "获取最新5条短信")
+    @ApiOperation(value = "获取最新5条短信：不聚合短信")
     @ApiImplicitParam(name = "phoNum", value = "手机号", required = true, dataType = "String", paramType = "path")
     @GetMapping(value = "/getLatest5/{phoNum}")
     public List<SmsRecv> get_last5_sms_by_phone(@PathVariable("phoNum") String phoNum) {
         return smsService.get_sms_last5(phoNum);
     }
 
-    @ApiOperation(value = "获取所有短信")
+    @ApiOperation(value = "获取所有短信：不聚合短信")
     @ApiImplicitParam(name = "phoNum", value = "手机号", required = true, dataType = "String", paramType = "path")
     @GetMapping(value = "/getAll/{phoNum}")
     public List<SmsRecv> get_all_sms_by_phone(@PathVariable("phoNum") String phoNum) {

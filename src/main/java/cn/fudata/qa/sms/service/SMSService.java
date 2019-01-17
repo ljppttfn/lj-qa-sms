@@ -61,7 +61,7 @@ public class SMSService {
     }
 
     /**
-     * 根据手机号获取最新的一条短信
+     * 根据手机号获取最新的一条完整的短信
      *
      * @param phoNum phoneNumber
      * @return smsContent
@@ -72,25 +72,68 @@ public class SMSService {
             logger.info("手机号 {} 非猫池中的手机号，请检查！", phoNum);
             return null;
         }
-        SmsRecv sms_list;
+        List<SmsRecv> sms_list;
         switch (cp.getType()) {
             case "10000":
-                sms_list = smsRecvMapper10000.selectLatestByPort(cp.getPortnum());
+                sms_list = smsRecvMapper10000.selectLast5ByPort(cp.getPortnum());
                 break;
             case "10010":
-                sms_list = smsRecvMapper10010.selectLatestByPort(cp.getPortnum());
+                sms_list = smsRecvMapper10010.selectLast5ByPort(cp.getPortnum());
                 break;
             case "10086":
-                sms_list = smsRecvMapper10086.selectLatestByPort(cp.getPortnum());
+                sms_list = smsRecvMapper10086.selectLast5ByPort(cp.getPortnum());
                 break;
             default:
                 return null;
         }
+
         if (sms_list == null) {
             logger.info("手机号 {} 无短信", phoNum);
             return null;
+        }
+
+        return assembly_sms(sms_list);
+
+    }
+
+
+    /**
+     * 返回最新收到的一条完整的短信。
+     *
+     * 因为猫池缘故，会将一条短信切割开，因此需要聚合为一条完整的短信，否则短信验证码不确定会在哪条记录内；
+     * 聚合方案：默认3s内的连续短信为同1条完整短信
+     *
+     * @param sms_list 待聚合的sms list，必须是数据库中按时间倒序的list
+     * @return 最新收到的一条完整的短信
+     */
+    private SmsRecv assembly_sms(List<SmsRecv> sms_list){
+        if (sms_list == null) {
+            return null;
         } else {
-            return sms_list;
+            if (sms_list.size() == 1) {
+                return sms_list.get(0);
+            } else {  //当有多条短信时，因为猫池缘故，会将一条短信切割开，需要聚合
+                int duration = 3; //默认3s内的连续短信为同1条完整短信
+
+                SmsRecv smsRecv1 = sms_list.get(0);
+                String smsdate1 = smsRecv1.getSmsdate();
+                StringBuilder sb1 = new StringBuilder(smsRecv1.getSmscontent());
+                LocalDateTime time1 = LocalDateTime.parse(smsdate1, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+                for (int i = 1; i < sms_list.size(); i++) {
+                    SmsRecv smsRecv_tmp = sms_list.get(i);
+                    String smsdate_tmp = smsRecv_tmp.getSmsdate();
+                    LocalDateTime time_tmp = LocalDateTime.parse(smsdate_tmp, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+                    //连续时间内的连续短信为同1条完整短信，将短信内容挨个组装到最后一条前面
+                    if (time1.minusSeconds(duration).isBefore(time_tmp)) {
+                        String sms_content = smsRecv_tmp.getSmscontent();
+                        sb1.insert(0, sms_content);
+                    }
+                }
+                smsRecv1.setSmscontent(String.valueOf(sb1));
+                return smsRecv1;
+            }
         }
     }
 
@@ -136,7 +179,7 @@ public class SMSService {
             logger.info("手机号 {} 在最近的5min内无短信", phoNum);
             return null;
         } else {
-            return sms_list.get(0);
+            return assembly_sms(sms_list);
         }
     }
 

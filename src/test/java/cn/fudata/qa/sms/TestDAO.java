@@ -65,8 +65,8 @@ public class TestDAO {
 
     @Test
     public void test_get_sms(){
-        SmsRecv ctx = smsService.get_sms_latest("13244711160");
-        System.out.println(ctx);
+        SmsRecv ctx = smsService.get_sms_latest("15599446806");
+        System.out.println(ctx.getSmscontent());
     }
 
     @Test

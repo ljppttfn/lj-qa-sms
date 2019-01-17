@@ -110,7 +110,7 @@ public class SMSService {
 
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String beginData = LocalDateTime.now().minusMinutes(500).format(formatter);
+        String beginData = LocalDateTime.now().minusMinutes(5).format(formatter);
 
 
         SmsRecvExample example = new SmsRecvExample();

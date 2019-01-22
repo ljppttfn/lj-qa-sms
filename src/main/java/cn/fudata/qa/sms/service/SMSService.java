@@ -129,6 +129,9 @@ public class SMSService {
                     if (time1.minusSeconds(duration).isBefore(time_tmp)) {
                         String sms_content = smsRecv_tmp.getSmscontent();
                         sb1.insert(0, sms_content);
+
+                        //循环检查，连续2个短信间间隔在有效期内则持续拼接
+                        time1 = LocalDateTime.parse(smsdate_tmp, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
                     }
                 }
                 smsRecv1.setSmscontent(String.valueOf(sb1));

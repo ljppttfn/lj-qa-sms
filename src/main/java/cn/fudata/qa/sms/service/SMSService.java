@@ -101,7 +101,7 @@ public class SMSService {
      * 返回最新收到的一条完整的短信。
      *
      * 因为猫池缘故，会将一条短信切割开，因此需要聚合为一条完整的短信，否则短信验证码不确定会在哪条记录内；
-     * 聚合方案：默认3s内的连续短信为同1条完整短信
+     * 聚合方案：默认6s内的连续短信为同1条完整短信
      *
      * @param sms_list 待聚合的sms list，必须是数据库中按时间倒序的list
      * @return 最新收到的一条完整的短信
@@ -113,7 +113,7 @@ public class SMSService {
             if (sms_list.size() == 1) {
                 return sms_list.get(0);
             } else {  //当有多条短信时，因为猫池缘故，会将一条短信切割开，需要聚合
-                int duration = 3; //默认3s内的连续短信为同1条完整短信
+                int duration = 6; //默认6s内的连续短信为同1条完整短信
 
                 SmsRecv smsRecv1 = sms_list.get(0);
                 String smsdate1 = smsRecv1.getSmsdate();
@@ -125,7 +125,7 @@ public class SMSService {
                     String smsdate_tmp = smsRecv_tmp.getSmsdate();
                     LocalDateTime time_tmp = LocalDateTime.parse(smsdate_tmp, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-                    //连续时间内的连续短信为同1条完整短信，将短信内容挨个组装到最后一条前面
+                    //连续时间内的连续短信为同1条完整短信，将短信内容挨个组装到接收时间为最后的一条短信前面
                     if (time1.minusSeconds(duration).isBefore(time_tmp)) {
                         String sms_content = smsRecv_tmp.getSmscontent();
                         sb1.insert(0, sms_content);

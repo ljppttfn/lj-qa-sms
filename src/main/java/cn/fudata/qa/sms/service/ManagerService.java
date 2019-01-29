@@ -49,9 +49,7 @@ public class ManagerService {
         for(CardPosition cardPosition: cp_list){
             String phoneNum = cardPosition.getPhonum();
 
-            //原表中的端口号信息
-            Integer portNum = cardPosition.getPortnum();
-
+            //根据手机号从 PortInfo 表中读取端口号、IMSI、ICCID等信息并更新
             PortInfo portInfo = null;
             switch (type){
                 case CARD10000:
@@ -65,13 +63,11 @@ public class ManagerService {
                     break;
             }
 
-            //从猫池中获取的最新的端口号信息
             if(portInfo != null){
-                portNum = portInfo.getPortnum();
-            }
+                cardPosition.setPortnum(portInfo.getPortnum());
+                cardPosition.setIccid(portInfo.getIccid());
+                cardPosition.setImsi(portInfo.getImsi());
 
-            if(portNum != null && portNum != 0){
-                cardPosition.setPortnum(portNum);
                 cardPositionMapper.updateByPrimaryKey(cardPosition);
             }
         }

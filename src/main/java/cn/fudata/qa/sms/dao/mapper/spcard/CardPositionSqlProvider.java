@@ -48,6 +48,14 @@ public class CardPositionSqlProvider {
             sql.VALUES("Type", "#{type,jdbcType=VARCHAR}");
         }
         
+        if (record.getProvince() != null) {
+            sql.VALUES("Province", "#{province,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getCity() != null) {
+            sql.VALUES("City", "#{city,jdbcType=VARCHAR}");
+        }
+        
         if (record.getPoolid() != null) {
             sql.VALUES("PoolID", "#{poolid,jdbcType=INTEGER}");
         }
@@ -60,16 +68,16 @@ public class CardPositionSqlProvider {
             sql.VALUES("Fee", "#{fee,jdbcType=INTEGER}");
         }
         
+        if (record.getImsi() != null) {
+            sql.VALUES("IMSI", "#{imsi,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getIccid() != null) {
+            sql.VALUES("ICCID", "#{iccid,jdbcType=VARCHAR}");
+        }
+        
         if (record.getMsg() != null) {
             sql.VALUES("Msg", "#{msg,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getProvince() != null) {
-            sql.VALUES("Province", "#{province,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getCity() != null) {
-            sql.VALUES("City", "#{city,jdbcType=VARCHAR}");
         }
         
         return sql.toString();
@@ -87,12 +95,14 @@ public class CardPositionSqlProvider {
         sql.SELECT("IdCard");
         sql.SELECT("RealName");
         sql.SELECT("Type");
+        sql.SELECT("Province");
+        sql.SELECT("City");
         sql.SELECT("PoolID");
         sql.SELECT("PortNum");
         sql.SELECT("Fee");
+        sql.SELECT("IMSI");
+        sql.SELECT("ICCID");
         sql.SELECT("Msg");
-        sql.SELECT("Province");
-        sql.SELECT("City");
         sql.FROM("card_position");
         applyWhere(sql, example, false);
         
@@ -134,6 +144,14 @@ public class CardPositionSqlProvider {
             sql.SET("Type = #{record.type,jdbcType=VARCHAR}");
         }
         
+        if (record.getProvince() != null) {
+            sql.SET("Province = #{record.province,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getCity() != null) {
+            sql.SET("City = #{record.city,jdbcType=VARCHAR}");
+        }
+        
         if (record.getPoolid() != null) {
             sql.SET("PoolID = #{record.poolid,jdbcType=INTEGER}");
         }
@@ -146,16 +164,16 @@ public class CardPositionSqlProvider {
             sql.SET("Fee = #{record.fee,jdbcType=INTEGER}");
         }
         
+        if (record.getImsi() != null) {
+            sql.SET("IMSI = #{record.imsi,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getIccid() != null) {
+            sql.SET("ICCID = #{record.iccid,jdbcType=VARCHAR}");
+        }
+        
         if (record.getMsg() != null) {
             sql.SET("Msg = #{record.msg,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getProvince() != null) {
-            sql.SET("Province = #{record.province,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getCity() != null) {
-            sql.SET("City = #{record.city,jdbcType=VARCHAR}");
         }
         
         applyWhere(sql, example, true);
@@ -172,12 +190,14 @@ public class CardPositionSqlProvider {
         sql.SET("IdCard = #{record.idcard,jdbcType=VARCHAR}");
         sql.SET("RealName = #{record.realname,jdbcType=VARCHAR}");
         sql.SET("Type = #{record.type,jdbcType=VARCHAR}");
+        sql.SET("Province = #{record.province,jdbcType=VARCHAR}");
+        sql.SET("City = #{record.city,jdbcType=VARCHAR}");
         sql.SET("PoolID = #{record.poolid,jdbcType=INTEGER}");
         sql.SET("PortNum = #{record.portnum,jdbcType=INTEGER}");
         sql.SET("Fee = #{record.fee,jdbcType=INTEGER}");
+        sql.SET("IMSI = #{record.imsi,jdbcType=VARCHAR}");
+        sql.SET("ICCID = #{record.iccid,jdbcType=VARCHAR}");
         sql.SET("Msg = #{record.msg,jdbcType=VARCHAR}");
-        sql.SET("Province = #{record.province,jdbcType=VARCHAR}");
-        sql.SET("City = #{record.city,jdbcType=VARCHAR}");
         
         CardPositionExample example = (CardPositionExample) parameter.get("example");
         applyWhere(sql, example, true);
@@ -208,6 +228,14 @@ public class CardPositionSqlProvider {
             sql.SET("Type = #{type,jdbcType=VARCHAR}");
         }
         
+        if (record.getProvince() != null) {
+            sql.SET("Province = #{province,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getCity() != null) {
+            sql.SET("City = #{city,jdbcType=VARCHAR}");
+        }
+        
         if (record.getPoolid() != null) {
             sql.SET("PoolID = #{poolid,jdbcType=INTEGER}");
         }
@@ -220,16 +248,16 @@ public class CardPositionSqlProvider {
             sql.SET("Fee = #{fee,jdbcType=INTEGER}");
         }
         
+        if (record.getImsi() != null) {
+            sql.SET("IMSI = #{imsi,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getIccid() != null) {
+            sql.SET("ICCID = #{iccid,jdbcType=VARCHAR}");
+        }
+        
         if (record.getMsg() != null) {
             sql.SET("Msg = #{msg,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getProvince() != null) {
-            sql.SET("Province = #{province,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getCity() != null) {
-            sql.SET("City = #{city,jdbcType=VARCHAR}");
         }
         
         sql.WHERE("Id = #{id,jdbcType=INTEGER}");

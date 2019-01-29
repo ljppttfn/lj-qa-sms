@@ -1,14 +1,18 @@
 package cn.fudata.qa.sms.service;
 
+import cn.fudata.qa.sms.dao.mapper.spcard10010.CardPositionMapper;
+
 import cn.fudata.qa.sms.dao.mapper.spcard10000.SmsRecvMapper10000;
-import cn.fudata.qa.sms.dao.mapper.spcard.CardPositionMapper;
 import cn.fudata.qa.sms.dao.mapper.spcard10000.SmsSendMapper10000;
+
 import cn.fudata.qa.sms.dao.mapper.spcard10010.SmsRecvMapper10010;
 import cn.fudata.qa.sms.dao.mapper.spcard10010.SmsSendMapper10010;
+
 import cn.fudata.qa.sms.dao.mapper.spcard10086.SmsSendMapper10086;
+import cn.fudata.qa.sms.dao.mapper.spcard10086.SmsRecvMapper10086;
+
 import cn.fudata.qa.sms.dao.model.CardPosition;
 import cn.fudata.qa.sms.dao.model.SmsRecv;
-import cn.fudata.qa.sms.dao.mapper.spcard10086.SmsRecvMapper10086;
 import cn.fudata.qa.sms.dao.model.SmsRecvExample;
 import cn.fudata.qa.sms.dao.model.SmsSend;
 import org.slf4j.Logger;
@@ -99,14 +103,14 @@ public class SMSService {
 
     /**
      * 返回最新收到的一条完整的短信。
-     *
+     * <p>
      * 因为猫池缘故，会将一条短信切割开，因此需要聚合为一条完整的短信，否则短信验证码不确定会在哪条记录内；
      * 聚合方案：默认6s内的连续短信为同1条完整短信
      *
      * @param sms_list 待聚合的sms list，必须是数据库中按时间倒序的list
      * @return 最新收到的一条完整的短信
      */
-    private SmsRecv assembly_sms(List<SmsRecv> sms_list){
+    private SmsRecv assembly_sms(List<SmsRecv> sms_list) {
         if (sms_list == null) {
             return null;
         } else {

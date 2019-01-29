@@ -7,6 +7,7 @@ import cn.fudata.qa.sms.dao.mapper.spcard10086.SmsRecvMapper10086;
 import cn.fudata.qa.sms.dao.model.CardPosition;
 import cn.fudata.qa.sms.dao.model.CardPositionExample;
 import cn.fudata.qa.sms.dao.model.SmsRecv;
+import cn.fudata.qa.sms.service.ManagerService;
 import cn.fudata.qa.sms.service.SMSService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -73,5 +74,14 @@ public class TestDAO {
     public void test_3(){
         SmsRecv res = smsService.get_sms_latest_in5min("15511963903");
         System.out.println(JSON.toJSONString(res));
+    }
+
+
+    @Autowired
+    ManagerService managerService;
+
+    @Test
+    public void test_card_init(){
+        managerService.init_all_cardPositionPortNum();
     }
 }

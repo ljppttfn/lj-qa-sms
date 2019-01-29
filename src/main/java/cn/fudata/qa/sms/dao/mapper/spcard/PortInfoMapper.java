@@ -58,6 +58,23 @@ public interface PortInfoMapper {
     })
     PortInfo selectByPrimaryKey(Integer id);
 
+
+    @Select({
+            "select",
+            "Id, PortNum, IMSI, ICCID, PhoNum",
+            "from port_info",
+            "where PhoNum = #{phoNum,jdbcType=VARCHAR}",
+            "order by id desc limit 1"
+    })
+    @ConstructorArgs({
+            @Arg(column="Id", javaType=Integer.class, jdbcType=JdbcType.INTEGER, id=true),
+            @Arg(column="PortNum", javaType=Integer.class, jdbcType=JdbcType.INTEGER),
+            @Arg(column="IMSI", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="ICCID", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="PhoNum", javaType=String.class, jdbcType=JdbcType.VARCHAR)
+    })
+    PortInfo selectByPhoNum(String phoNum);
+
     @UpdateProvider(type=PortInfoSqlProvider.class, method="updateByExampleSelective")
     int updateByExampleSelective(@Param("record") PortInfo record, @Param("example") PortInfoExample example);
 

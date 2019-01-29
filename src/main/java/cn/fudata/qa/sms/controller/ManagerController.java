@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author youlong
  * date 2019/1/29
  */
-@Api(value = "/manager", tags = "猫池操作")
+//@Api(value = "/manager", tags = "猫池操作")
 @RestController
 @RequestMapping(value = "/manager")
 public class ManagerController {
@@ -21,7 +21,7 @@ public class ManagerController {
     @Autowired
     ManagerService managerService;
 
-    @ApiOperation(value = "初始化猫池端口号和手机号对应关系")
+//    @ApiOperation(value = "初始化猫池端口号和手机号对应关系, 理论上仅需在猫池组件完成后操作一次，无需频繁操作")
     @PostMapping(value = "/init")
     public boolean init(){
         try {

@@ -1,4 +1,4 @@
-package cn.fudata.qa.sms.controller;
+package cn.fudata.qa.sms.controller2;
 
 
 import cn.fudata.qa.sms.service.ManagerService;

@@ -13,6 +13,12 @@ Swagger 接口地址：http://fudata-qa-sms.wodlee-qa.k2-test.fudata.info/swagge
 3. MySQL中最关键的一个表是： `card_position`，数据一经初始化后保持不变，建议备份
 
 
+## 初始化猫池端口与卡对应关系：
+1. 首先插卡，操作新酷卡软件，至每个端口号正确识别出卡号
+    - 方式1：采用新酷卡提供的免费wap方式获取手机号，或收费短信方式获取
+    - 方式2：将历史保存的手机号和 imsi、iccid 对应关系导入新酷卡软件
+2. 执行初始化接口： POST：  http://fudata-qa-sms.wodlee-qa.k2-test.fudata.info/manager/init
+
 ## 猫池环境
 ####1. 主机固定的三个ip：
 172.16.8.101-103   

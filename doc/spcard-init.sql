@@ -49,14 +49,16 @@ create table if not exists `card_position` (
   `PhoNum` varchar(20) NOT NULL DEFAULT '' COMMENT '手机号',
   `Pwd` varchar(20) DEFAULT '' COMMENT '服务密码',
   `IdCard` varchar(20) DEFAULT '' COMMENT '身份证信息，可能是身份证后6位',
-  `Name` varchar(20) DEFAULT '' COMMENT '姓名，可选',
+  `RealName` varchar(20) DEFAULT '' COMMENT '姓名，可选',
   `Type` varchar(5) DEFAULT '' COMMENT '运营商类型：10010 联通 ； 10086 移动；10000 电信',
   `Province` varchar(10) DEFAULT '' COMMENT '省份',
   `City` varchar(10) DEFAULT '' COMMENT '城市',
   `PoolID` int(11) NOT NULL  COMMENT '猫池设备编号',
   `PortNum` int(11) unsigned DEFAULT '0' COMMENT '接收短信的端口号',
   `Fee` int(5) DEFAULT 0 COMMENT '月套餐费',
-  `Desc` varchar(255) COMMENT '其他备选信息',
+  `IMSI` varchar(255) DEFAULT NULL COMMENT '用户识别码(IMSI)',
+  `ICCID` varchar(255) DEFAULT NULL COMMENT '卡识别码(ICCID)',
+  `Msg` varchar(255) COMMENT '其他备选信息',
   PRIMARY KEY (`Id`),
   unique KEY (`PhoNum`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT '手机号和猫池位置关系映射表';

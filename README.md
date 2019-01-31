@@ -18,7 +18,7 @@ Swagger 接口地址：http://fudata-qa-sms.wodlee-qa.k2-test.fudata.info/swagge
 2. 执行初始化接口： POST：  http://fudata-qa-sms.wodlee-qa.k2-test.fudata.info/manager/init
 
 ## 猫池环境
-####1. 3台主机teamviewer连接方式：
+#### 1. 3台主机teamviewer连接方式：
 猫池电脑账密， 3台都是：youlong /   密码
 
 
@@ -28,7 +28,7 @@ TeamView ID| PWD| Desc
 1172491085 | 000000 | 电信PC
 1179307008 | 000000 | 移动pc
 
-####2. 主机固定的三个ip：(没用到)
+#### 2. 主机固定的三个ip：(没用到)
 172.16.8.101-103   
 255.255.255.0   
 172.16.8.254   

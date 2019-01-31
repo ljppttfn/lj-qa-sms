@@ -15,6 +15,7 @@ import cn.fudata.qa.sms.dao.model.CardPosition;
 import cn.fudata.qa.sms.dao.model.SmsRecv;
 import cn.fudata.qa.sms.dao.model.SmsRecvExample;
 import cn.fudata.qa.sms.dao.model.SmsSend;
+import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -269,11 +270,23 @@ public class SMSService {
      * @param text       短信内容
      * @return boolean，成功true，失败false
      */
-    public boolean send_sms(String fromPhoNum, String toPhoNum, String text) {
+    public JSONObject send_sms(String fromPhoNum, String toPhoNum, String text) {
+        JSONObject result = new JSONObject();
+
         CardPosition cp = cardPositionMapper.selectByPhoNum(fromPhoNum);
-        if (cp == null) {
-            logger.info("手机号 {} 非猫池中的手机号，请检查！", fromPhoNum);
-            return false;
+        if (cp == null ) {
+            String msg=String.format("手机号 %s 非猫池中的手机号，请检查！",fromPhoNum);
+            logger.info(msg);
+            result.put("result",false);
+            result.put("msg", msg);
+            return result;
+        }
+        if(cp.getPortnum() == null || cp.getPortnum() == 0){
+            String msg=String.format("手机号 %s 在猫池中的无可用端口，请检查！",fromPhoNum);
+            logger.info(msg);
+            result.put("result",false);
+            result.put("msg", msg);
+            return result;
         }
 
         SmsSend smsSend = new SmsSend();
@@ -284,7 +297,7 @@ public class SMSService {
         smsSend.setSmstype(0);
         smsSend.setSmsstate(0);
 
-        int res;
+        int res = 0;
         switch (cp.getType()) {
             case "10000":
                 res = smsSendMapper10000.insert(smsSend);
@@ -296,8 +309,17 @@ public class SMSService {
                 res = smsSendMapper10086.insert(smsSend);
                 break;
             default:
-                return false;
+                result.put("result",false);
+                result.put("msg", "未知卡类型");
+                break;
         }
-        return res > 0;
+        if(res > 0) {
+            result.put("result",true);
+            result.put("msg", "短信发送任务提交成功, 影响条数："+res);
+        }else {
+            result.put("result",false);
+            result.put("msg", "短信发送任务提交失败, 影响条数："+res);
+        }
+        return result;
     }
 }

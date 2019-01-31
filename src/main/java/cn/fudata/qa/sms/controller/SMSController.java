@@ -3,6 +3,7 @@ package cn.fudata.qa.sms.controller;
 import cn.fudata.qa.sms.dao.model.SmsRecv;
 import cn.fudata.qa.sms.model.SmsSendRequestVo;
 import cn.fudata.qa.sms.service.SMSService;
+import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -52,21 +53,21 @@ public class SMSController {
         return smsService.get_sms_all(phoNum);
     }
 
-    /**
-     * 这种方式仅支持请求头的 Content-Type = application/json；
-     * 但未找到正确的方式支持这种方式在swagger定义： 参数为Map
-     *
-     * @param body json格式
-     * @return boolean
-     */
-    @ApiOperation(value = "发送短信-测试3")
-    @PostMapping(value = "/send3")
-    public boolean send3(@RequestBody Map<String, Object> body) {
-        String fromPhoNum = body.get("from").toString();
-        String toPhoNum = body.get("to").toString();
-        String text = body.get("text").toString();
-        return smsService.send_sms(fromPhoNum, toPhoNum, text);
-    }
+//    /**
+//     * 这种方式仅支持请求头的 Content-Type = application/json；
+//     * 但未找到正确的方式支持这种方式在swagger定义： 参数为Map
+//     *
+//     * @param body json格式
+//     * @return boolean
+//     */
+//    @ApiOperation(value = "发送短信-测试3")
+//    @PostMapping(value = "/send3")
+//    public JSONObject send3(@RequestBody Map<String, Object> body) {
+//        String fromPhoNum = body.get("from").toString();
+//        String toPhoNum = body.get("to").toString();
+//        String text = body.get("text").toString();
+//        return smsService.send_sms(fromPhoNum, toPhoNum, text);
+//    }
 
     /**
      * 这种方式支持请求头 Content-Type: application/x-www-form-urlencoded  及默认请求头
@@ -83,7 +84,7 @@ public class SMSController {
             @ApiImplicitParam(name = "text", value = "短信内容", required = true, dataType = "String", paramType = "query"),
     })
     @PostMapping(value = "/send2")
-    public boolean send2(@RequestParam("from") String from, @RequestParam("to") String to, @RequestParam("text") String text) {
+    public JSONObject send2(@RequestParam("from") String from, @RequestParam("to") String to, @RequestParam("text") String text) {
         return smsService.send_sms(from, to, text);
     }
 
@@ -95,7 +96,7 @@ public class SMSController {
     @ApiOperation(value = "发送短信", produces="application/json")
     @ApiImplicitParam(name = "smsSendRequestVo", value = "短信发送对象", required = true, dataType = "SmsSendRequestVo")
     @PostMapping(value = "/send")
-    public boolean send(@RequestBody SmsSendRequestVo smsSendRequestVo) {
+    public JSONObject send(@RequestBody SmsSendRequestVo smsSendRequestVo) {
         String fromPhoNum = smsSendRequestVo.getFrom();
         String toPhoNum = smsSendRequestVo.getTo();
         String text = smsSendRequestVo.getText();

@@ -68,7 +68,7 @@ public class PhoneNumberService {
 
     public List<CardPosition> get_phone_all() {
         CardPositionExample example = new CardPositionExample();
-        example.createCriteria();
+        example.createCriteria().andPortnumGreaterThan(0);
         return cardPositionMapper.selectByExample(example);
     }
 

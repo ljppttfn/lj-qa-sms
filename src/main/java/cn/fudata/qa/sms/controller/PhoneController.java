@@ -23,14 +23,14 @@ public class PhoneController {
     @Autowired
     PhoneNumberService service;
 
-    @ApiOperation(value = "获取所有手机卡号")
+    @ApiOperation(value = "获取猫池中的所有手机卡号")
     @GetMapping(value = "/getAll")
     public List<CardPosition> get_all_phone() {
         return service.get_phone_all();
     }
 
 
-    @ApiOperation(value = "获取特定运营商类型下的所有手机卡号")
+    @ApiOperation(value = "获取猫池中特定运营商类型下的所有手机卡号")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "type", value = "运营商类型代码", dataType = "String", paramType = "path", example = "10010,10000,10086", required = true),
             @ApiImplicitParam(name = "province", value = "省份名称", dataType = "String", paramType = "query", example = "浙江")
@@ -52,7 +52,7 @@ public class PhoneController {
     }
 
 
-    @ApiOperation(value = "根据省份获取该省份下的所有手机卡号")
+    @ApiOperation(value = "根据省份获取猫池中该省份下的所有手机卡号")
     @ApiImplicitParam(name = "province", value = "省份名称", dataType = "String", paramType = "query", example = "浙江", required = true)
     @GetMapping(value = "/getByProvince")
     public List<CardPosition> get_phone_by_province(@RequestParam("province") String province) {

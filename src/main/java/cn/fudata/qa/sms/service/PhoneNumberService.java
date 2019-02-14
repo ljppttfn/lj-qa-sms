@@ -80,20 +80,27 @@ public class PhoneNumberService {
      */
     public List<CardPosition> get_phone_by_type(PhoneNumberType type) {
         CardPositionExample example = new CardPositionExample();
-        example.createCriteria().andTypeEqualTo(type.getCode());
+        example.createCriteria()
+                .andTypeEqualTo(type.getCode())
+                .andPortnumGreaterThan(0);
         return cardPositionMapper.selectByExample(example);
     }
 
 
     public List<CardPosition> get_phone_by_province(String province) {
         CardPositionExample example = new CardPositionExample();
-        example.createCriteria().andProvinceEqualTo(province);
+        example.createCriteria()
+                .andProvinceEqualTo(province)
+                .andPortnumGreaterThan(0);;
         return cardPositionMapper.selectByExample(example);
     }
 
     public List<CardPosition> get_phone_by_type_and_province(String type, String province) {
         CardPositionExample example = new CardPositionExample();
-        example.createCriteria().andTypeEqualTo(type).andProvinceEqualTo(province);
+        example.createCriteria()
+                .andTypeEqualTo(type)
+                .andProvinceEqualTo(province)
+                .andPortnumGreaterThan(0);;
         return cardPositionMapper.selectByExample(example);
     }
 

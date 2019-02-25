@@ -91,7 +91,7 @@ public class PhoneNumberService {
         CardPositionExample example = new CardPositionExample();
         example.createCriteria()
                 .andProvinceEqualTo(province)
-                .andPortnumGreaterThan(0);;
+                .andPortnumGreaterThan(0);
         return cardPositionMapper.selectByExample(example);
     }
 
@@ -100,7 +100,13 @@ public class PhoneNumberService {
         example.createCriteria()
                 .andTypeEqualTo(type)
                 .andProvinceEqualTo(province)
-                .andPortnumGreaterThan(0);;
+                .andPortnumGreaterThan(0);
+        return cardPositionMapper.selectByExample(example);
+    }
+
+    public List<CardPosition> get_phone_detail(String phoNum){
+        CardPositionExample example = new CardPositionExample();
+        example.createCriteria().andPhonumEqualTo(phoNum);
         return cardPositionMapper.selectByExample(example);
     }
 

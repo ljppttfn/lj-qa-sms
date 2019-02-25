@@ -59,4 +59,12 @@ public class PhoneController {
         return service.get_phone_by_province(province);
     }
 
+
+    @ApiOperation(value = "获取手机号的详细信息，如密码等")
+    @ApiImplicitParam(name = "phone", value = "手机号", dataType = "String", paramType = "path", required = true)
+    @GetMapping(value = "/getDetail/{phone}")
+    public List<CardPosition> get_phone_detail(@PathVariable("phone") String phone){
+        return service.get_phone_detail(phone);
+    }
+
 }

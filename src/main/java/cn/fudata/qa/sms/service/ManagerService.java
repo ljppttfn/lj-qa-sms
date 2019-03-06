@@ -45,7 +45,7 @@ public class ManagerService {
 
 
     private void init_portNumAndPhoNum(PhoneNumberType type){
-        List<CardPosition> cp_list = phoneNumberService.get_phone_by_type(type);
+        List<CardPosition> cp_list = phoneNumberService.get_all_phone_by_type(type);
         for(CardPosition cardPosition: cp_list){
             String phoneNum = cardPosition.getPhonum();
 

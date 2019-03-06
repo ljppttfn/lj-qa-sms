@@ -36,6 +36,7 @@ public class PhoneController {
             @ApiImplicitParam(name = "province", value = "省份名称", dataType = "String", paramType = "query", example = "浙江")
     })
     @GetMapping(value = "/getByType/{type}")
+    @CrossOrigin(origins = "*",maxAge = 3600)
     public List<CardPosition> get_phone_by_type(@PathVariable("type") String type,
                                                 @RequestParam(value = "province", required = false) String province) {
         for (PhoneNumberType t : PhoneNumberType.values()) {

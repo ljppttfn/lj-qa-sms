@@ -73,7 +73,7 @@ public class PhoneNumberService {
     }
 
     /**
-     * 根据运营商类型获取该类型下的所有卡信息
+     * 根据运营商类型获取该类型下的所有卡信息,仅返回猫池中的卡
      *
      * @param type 运营商类型，枚举类 PhoneNumberType
      * @return list
@@ -83,6 +83,19 @@ public class PhoneNumberService {
         example.createCriteria()
                 .andTypeEqualTo(type.getCode())
                 .andPortnumGreaterThan(0);
+        return cardPositionMapper.selectByExample(example);
+    }
+
+    /**
+     * 根据运营商类型获取该类型下的所有卡信息
+     *
+     * @param type 运营商类型，枚举类 PhoneNumberType
+     * @return list
+     */
+    public List<CardPosition> get_all_phone_by_type(PhoneNumberType type) {
+        CardPositionExample example = new CardPositionExample();
+        example.createCriteria()
+                .andTypeEqualTo(type.getCode());
         return cardPositionMapper.selectByExample(example);
     }
 
@@ -104,7 +117,7 @@ public class PhoneNumberService {
         return cardPositionMapper.selectByExample(example);
     }
 
-    public List<CardPosition> get_phone_detail(String phoNum){
+    public List<CardPosition> get_phone_detail(String phoNum) {
         CardPositionExample example = new CardPositionExample();
         example.createCriteria().andPhonumEqualTo(phoNum);
         return cardPositionMapper.selectByExample(example);

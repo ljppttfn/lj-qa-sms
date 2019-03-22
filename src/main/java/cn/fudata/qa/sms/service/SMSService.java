@@ -193,6 +193,62 @@ public class SMSService {
 
 
     /**
+     * 获取当前时间之后的第一条短信，持续1min后如果无短信则返回null，每隔10s查询一次，若有内容则直接返回，拼接成一条短信
+     * @param phoNum 手机号
+     * @return SmsRecv or null
+     */
+    public SmsRecv get_sms_latest_afterNowUntil1min(String phoNum) {
+        CardPosition cp = cardPositionMapper.selectByPhoNum(phoNum);
+        if (cp == null) {
+            logger.info("手机号 {} 非猫池中的手机号，请检查！", phoNum);
+            return null;
+        }
+
+        // 查询的短信时间范围是：当前时间至1min之后，每隔10s查询一次，若有内容则直接返回，拼接成一条短信
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String beginData = LocalDateTime.now().format(formatter);
+        String endData = LocalDateTime.now().plusMinutes(1).format(formatter);
+
+        SmsRecvExample example = new SmsRecvExample();
+        example.createCriteria().andPortnumEqualTo(cp.getPortnum())
+                .andSmsdateGreaterThan(beginData).andSmsdateLessThan(endData);
+        example.setOrderByClause("smsdate desc");
+
+        int c = 0;
+        List<SmsRecv> sms_list;
+        do {
+            c++;
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            switch (cp.getType()) {
+                case "10000":
+                    sms_list = smsRecvMapper10000.selectByExample(example);
+                    break;
+                case "10010":
+                    sms_list = smsRecvMapper10010.selectByExample(example);
+                    break;
+                case "10086":
+                    sms_list = smsRecvMapper10086.selectByExample(example);
+                    break;
+                default:
+                    return null;
+            }
+            if (sms_list == null || sms_list.size() == 0) {
+                logger.info("手机号 {} 在最近的10s内无短信, 第 {} 次查询", phoNum, c);
+            } else {
+                return assembly_sms(sms_list);
+            }
+        }while (c<6);
+
+        return null;
+    }
+
+
+    /**
      * 根据手机号码，查询所有短信
      *
      * @param phoNum phoneNumber

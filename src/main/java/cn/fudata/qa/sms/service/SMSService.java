@@ -206,8 +206,7 @@ public class SMSService {
 
         // 查询的短信时间范围是：当前时间至1min之后，每隔10s查询一次，若有内容则直接返回，拼接成一条短信
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//        String beginData = LocalDateTime.now().format(formatter);
-        String beginData = LocalDateTime.now().minusMinutes(50).format(formatter);
+        String beginData = LocalDateTime.now().format(formatter);
         String endData = LocalDateTime.now().plusMinutes(1).format(formatter);
 
         SmsRecvExample example = new SmsRecvExample();

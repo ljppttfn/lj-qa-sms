@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author youlong
@@ -36,6 +35,16 @@ public class SMSController {
     @GetMapping(value = "/getLatest/{phoNum}")
     public SmsRecv get_latest_sms_by_phone(@PathVariable("phoNum") String phoNum) {
         return smsService.get_sms_latest(phoNum);
+    }
+
+    @ApiOperation(value = "获取给定时间之后的所有短信(不包含所给的时间)")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "phoNum", value = "手机号", required = true, dataType = "String", paramType = "path"),
+            @ApiImplicitParam(name = "time", value = "开始时间,毫秒", required = true, dataType = "String", paramType = "path")
+    })
+    @GetMapping(value = "/getLatest/{phoNum}/{time}")
+    public List<SmsRecv> get_sms_by_phone_time(@PathVariable("phoNum") String phoNum, @PathVariable("time") String time) {
+        return smsService.get_sms_by_phone_time(phoNum, Long.parseLong(time));
     }
 
 

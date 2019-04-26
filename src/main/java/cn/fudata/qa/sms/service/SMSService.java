@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -63,6 +64,39 @@ public class SMSService {
         this.smsSendMapper10000 = smsSendMapper10000;
         this.smsSendMapper10010 = smsSendMapper10010;
         this.smsSendMapper10086 = smsSendMapper10086;
+    }
+
+    public List<SmsRecv> get_sms_by_phone_time(String phoNum, long time){
+        CardPosition cp = cardPositionMapper.selectByPhoNum(phoNum);
+        if (cp == null) {
+            logger.info("手机号 {} 非猫池中的手机号，请检查！", phoNum);
+            return null;
+        }
+        List<SmsRecv> sms_list;
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime time2 = LocalDateTime.ofEpochSecond(time/1000,0, ZoneOffset.ofHours(8));
+        String beginData = time2.format(formatter);
+
+        SmsRecvExample example = new SmsRecvExample();
+        example.createCriteria().andPortnumEqualTo(cp.getPortnum())
+                .andSmsdateGreaterThan(beginData);
+        example.setOrderByClause("smsdate desc");
+        switch (cp.getType()) {
+            case "10000":
+                sms_list = smsRecvMapper10000.selectByExample(example);
+                break;
+            case "10010":
+                sms_list = smsRecvMapper10010.selectByExample(example);
+                break;
+            case "10086":
+                sms_list = smsRecvMapper10086.selectByExample(example);
+                break;
+            default:
+                return null;
+        }
+
+        return sms_list;
     }
 
     /**

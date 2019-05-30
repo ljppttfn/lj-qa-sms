@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -67,12 +68,13 @@ public class SMSService {
     }
 
     public List<SmsRecv> get_sms_by_phone_time(String phoNum, long time){
+        List<SmsRecv> sms_list = new ArrayList<>();
+
         CardPosition cp = cardPositionMapper.selectByPhoNum(phoNum);
         if (cp == null) {
             logger.info("手机号 {} 非猫池中的手机号，请检查！", phoNum);
-            return null;
+            return sms_list;
         }
-        List<SmsRecv> sms_list;
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime time2 = LocalDateTime.ofEpochSecond(time/1000,0, ZoneOffset.ofHours(8));
@@ -232,6 +234,7 @@ public class SMSService {
      * @return SmsRecv or null
      */
     public SmsRecv get_sms_latest_afterNowUntil1min(String phoNum) {
+
         CardPosition cp = cardPositionMapper.selectByPhoNum(phoNum);
         if (cp == null) {
             logger.info("手机号 {} 非猫池中的手机号，请检查！", phoNum);

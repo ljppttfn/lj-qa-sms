@@ -68,8 +68,13 @@ public class ManagerService {
                 cardPosition.setIccid(portInfo.getIccid());
                 cardPosition.setImsi(portInfo.getImsi());
 
-                cardPositionMapper.updateByPrimaryKey(cardPosition);
+
+            } else {
+                cardPosition.setPortnum(0);
+                cardPosition.setIccid("");
+                cardPosition.setImsi("");
             }
+            cardPositionMapper.updateByPrimaryKey(cardPosition);
         }
     }
 

@@ -1,13 +1,16 @@
 package cn.fudata.qa.sms;
 
+import cn.fudata.qa.sms.dao.model.SmsRecv;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author youlong
@@ -42,5 +45,14 @@ public class TestTmp {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String beginData = time2.format(formatter);
         System.out.println(beginData);
+    }
+
+    @Test
+    public void test_nullList(){
+        List<String> list = new ArrayList<>();
+        System.out.println(list);
+
+        SmsRecv sms = new SmsRecv();
+        System.out.println(sms);
     }
 }

@@ -1,23 +1,23 @@
-//package cn.fudata.qa.sms.service;
-//
-//import com.alibaba.fastjson.JSONObject;
-//import org.aspectj.lang.JoinPoint;
-//import org.aspectj.lang.ProceedingJoinPoint;
-//import org.aspectj.lang.annotation.*;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
-//import org.springframework.stereotype.Component;
-//import springfox.documentation.service.ResponseMessage;
-//
-//import java.util.Arrays;
-//
-///**
-// * @author youlong
-// * date 2019/5/5
-// */
-//@Aspect
-//@Component
-//public class SMSServiceAop {
+package cn.fudata.qa.sms.service;
+
+import com.alibaba.fastjson.JSONObject;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+import springfox.documentation.service.ResponseMessage;
+
+import java.util.Arrays;
+
+/**
+ * @author youlong
+ * date 2019/5/5
+ */
+@Aspect
+@Component
+public class SMSServiceAop {
 //    private Logger logger = LoggerFactory.getLogger(this.getClass());
 //
 //    /**
@@ -74,4 +74,4 @@
 //    public void afterThrowingAOP(){
 //        System.out.println("afterThrowing AOP");
 //    }
-//}
+}

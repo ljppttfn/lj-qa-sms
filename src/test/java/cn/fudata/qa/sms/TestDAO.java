@@ -1,22 +1,18 @@
 package cn.fudata.qa.sms;
 
 
-import cn.fudata.qa.sms.dao.mapper.spcard10000.PortInfoMapper10000;
-import cn.fudata.qa.sms.dao.mapper.spcard10010.CardPositionMapper;
+import cn.fudata.qa.sms.dao.mapper.spcard10000.CardPositionMapper10000;
 import cn.fudata.qa.sms.dao.mapper.spcard10010.SmsRecvMapper10010;
 import cn.fudata.qa.sms.dao.mapper.spcard10086.SmsRecvMapper10086;
 import cn.fudata.qa.sms.dao.model.*;
-import cn.fudata.qa.sms.service.ManagerService;
-import cn.fudata.qa.sms.service.SMSService;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import cn.fudata.qa.sms.service.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 /**
@@ -27,11 +23,12 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 public class TestDAO {
-//    @Resource
-//    CardPositionMapper mapper;
 
     @Autowired
-    CardPositionMapper cardPositionMapper;
+    CardPositionMapper10000 cardPositionMapper10000;
+
+    @Autowired
+    CardPositionService cardPositionService;
 
     @Autowired
     SMSService smsService;
@@ -42,76 +39,33 @@ public class TestDAO {
     @Autowired
     SmsRecvMapper10010 smsRecvMapper10010;
 
+    @Autowired
+    PhoneNumberService phoneNumberService;
+
     @Test
     public void test(){
+        List<CardPosition> res = phoneNumberService.get_all_phone_by_type(PhoneNumberType.CARD10000);
+        System.out.println(res.size());
+
         CardPositionExample example = new CardPositionExample();
-        example.createCriteria();
-        List<CardPosition> list = cardPositionMapper.selectByExample(example);
-        System.out.println(list.size());
-        for(CardPosition cp: list){
-            System.out.println(cp.getPhonum()+"  "+cp.getPwd() + " "+cp.getType());
-        }
+        example.createCriteria()
+                .andTypeEqualTo("10000");
+        List<CardPosition> res2 = cardPositionMapper10000.selectByExample(example);
+        System.out.println(res2.size());
     }
 
 
     @Test
     public void test2(){
-        CardPositionExample example = new CardPositionExample();
-        example.createCriteria().andIdLessThan(100);
-        List<CardPosition> list = cardPositionMapper.selectByExample(example);
-        for(CardPosition cp: list){
-            System.out.println(cp.getPhonum()+"  "+cp.getPwd() + " "+cp.getType());
-        }
-    }
+        CardPosition res = cardPositionService.selectByPhoNum("13394774451");
+        System.out.println(res.getProvince());
 
-    @Test
-    public void test_get_sms(){
-        SmsRecv ctx = smsService.get_sms_latest("15599446806");
-        System.out.println(ctx.getSmscontent());
-    }
+        CardPosition res2 = cardPositionService.selectByPhoNum("15061230248");
+        System.out.println(res2.getProvince());
 
-    @Test
-    public void test_3(){
-        SmsRecv res = smsService.get_sms_latest_in5min("15511963903");
-        System.out.println(JSON.toJSONString(res));
+        CardPosition res3 = cardPositionService.selectByPhoNum("15601002797");
+        System.out.println(res3.getProvince());
     }
 
 
-    @Autowired
-    ManagerService managerService;
-
-    @Test
-    public void test_card_init(){
-        managerService.init_all_cardPositionPortNum();
-    }
-
-
-    @Autowired
-    PortInfoMapper10000 portInfoMapper10000;
-
-    @Test
-    public void test_card(){
-        CardPositionExample ex_card = new CardPositionExample();
-        ex_card.createCriteria().andTypeEqualTo("10000").andPortnumGreaterThan(0);
-
-        List<CardPosition> list_card = cardPositionMapper.selectByExample(ex_card);
-        System.out.println(" card_postion size:  "+list_card.size());
-
-        PortInfoExample portInfoExample = new PortInfoExample();
-        portInfoExample.createCriteria();
-        List<PortInfo> list_port = portInfoMapper10000.selectByExample(portInfoExample);
-        System.out.println("list_port: "+list_port.size());
-
-        List<String> list_phone_card = new ArrayList<>();
-        for(CardPosition cardPosition: list_card){
-            list_phone_card.add(cardPosition.getPhonum());
-        }
-
-        for(PortInfo portInfo: list_port){
-            String phone = portInfo.getPhonum();
-            if(!list_phone_card.contains(phone)){
-                System.out.println(">>>>> 不包含的phone："+phone);
-            }
-        }
-    }
 }

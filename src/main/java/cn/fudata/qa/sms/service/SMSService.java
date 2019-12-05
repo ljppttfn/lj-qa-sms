@@ -1,7 +1,5 @@
 package cn.fudata.qa.sms.service;
 
-import cn.fudata.qa.sms.dao.mapper.spcard10010.CardPositionMapper;
-
 import cn.fudata.qa.sms.dao.mapper.spcard10000.SmsRecvMapper10000;
 import cn.fudata.qa.sms.dao.mapper.spcard10000.SmsSendMapper10000;
 
@@ -36,7 +34,7 @@ public class SMSService {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final
-    CardPositionMapper cardPositionMapper;
+    CardPositionService cardPositionService;
 
     private final
     SmsRecvMapper10000 smsRecvMapper10000;
@@ -57,8 +55,8 @@ public class SMSService {
     SmsSendMapper10086 smsSendMapper10086;
 
     @Autowired
-    public SMSService(CardPositionMapper cardPositionMapper, SmsRecvMapper10000 smsRecvMapper10000, SmsRecvMapper10010 smsRecvMapper10010, SmsRecvMapper10086 smsRecvMapper10086, SmsSendMapper10000 smsSendMapper10000, SmsSendMapper10010 smsSendMapper10010, SmsSendMapper10086 smsSendMapper10086) {
-        this.cardPositionMapper = cardPositionMapper;
+    public SMSService(CardPositionService cardPositionService, SmsRecvMapper10000 smsRecvMapper10000, SmsRecvMapper10010 smsRecvMapper10010, SmsRecvMapper10086 smsRecvMapper10086, SmsSendMapper10000 smsSendMapper10000, SmsSendMapper10010 smsSendMapper10010, SmsSendMapper10086 smsSendMapper10086) {
+        this.cardPositionService = cardPositionService;
         this.smsRecvMapper10000 = smsRecvMapper10000;
         this.smsRecvMapper10010 = smsRecvMapper10010;
         this.smsRecvMapper10086 = smsRecvMapper10086;
@@ -70,7 +68,7 @@ public class SMSService {
     public List<SmsRecv> get_sms_by_phone_time(String phoNum, long time){
         List<SmsRecv> sms_list = new ArrayList<>();
 
-        CardPosition cp = cardPositionMapper.selectByPhoNum(phoNum);
+        CardPosition cp = cardPositionService.selectByPhoNum(phoNum);
         if (cp == null) {
             logger.info("手机号 {} 非猫池中的手机号，请检查！", phoNum);
             return sms_list;
@@ -108,7 +106,7 @@ public class SMSService {
      * @return smsContent
      */
     public SmsRecv get_sms_latest(String phoNum) {
-        CardPosition cp = cardPositionMapper.selectByPhoNum(phoNum);
+        CardPosition cp = cardPositionService.selectByPhoNum(phoNum);
         if (cp == null) {
             logger.info("手机号 {} 非猫池中的手机号，请检查！", phoNum);
             return null;
@@ -189,7 +187,7 @@ public class SMSService {
      * @return smsContent
      */
     public SmsRecv get_sms_latest_in5min(String phoNum) {
-        CardPosition cp = cardPositionMapper.selectByPhoNum(phoNum);
+        CardPosition cp = cardPositionService.selectByPhoNum(phoNum);
         if (cp == null) {
             logger.info("手机号 {} 非猫池中的手机号，请检查！", phoNum);
             return null;
@@ -235,7 +233,7 @@ public class SMSService {
      */
     public SmsRecv get_sms_latest_afterNowUntil1min(String phoNum) {
 
-        CardPosition cp = cardPositionMapper.selectByPhoNum(phoNum);
+        CardPosition cp = cardPositionService.selectByPhoNum(phoNum);
         if (cp == null) {
             logger.info("手机号 {} 非猫池中的手机号，请检查！", phoNum);
             return null;
@@ -292,7 +290,7 @@ public class SMSService {
      * @return sms list
      */
     public List<SmsRecv> get_sms_all(String phoNum) {
-        CardPosition cp = cardPositionMapper.selectByPhoNum(phoNum);
+        CardPosition cp = cardPositionService.selectByPhoNum(phoNum);
         if (cp == null) {
             logger.info("手机号 {} 非猫池中的手机号，请检查！", phoNum);
             return null;
@@ -327,7 +325,7 @@ public class SMSService {
      * @return sms list
      */
     public List<SmsRecv> get_sms_last5(String phoNum) {
-        CardPosition cp = cardPositionMapper.selectByPhoNum(phoNum);
+        CardPosition cp = cardPositionService.selectByPhoNum(phoNum);
         if (cp == null) {
             logger.info("手机号 {} 非猫池中的手机号，请检查！", phoNum);
             return null;
@@ -366,7 +364,7 @@ public class SMSService {
     public JSONObject send_sms(String fromPhoNum, String toPhoNum, String text) {
         JSONObject result = new JSONObject();
 
-        CardPosition cp = cardPositionMapper.selectByPhoNum(fromPhoNum);
+        CardPosition cp = cardPositionService.selectByPhoNum(fromPhoNum);
         if (cp == null ) {
             String msg=String.format("手机号 %s 非猫池中的手机号，请检查！",fromPhoNum);
             logger.info(msg);

@@ -1,7 +1,6 @@
 package cn.fudata.qa.sms.service;
 
 import cn.fudata.qa.sms.dao.mapper.spcard10000.PortInfoMapper10000;
-import cn.fudata.qa.sms.dao.mapper.spcard10010.CardPositionMapper;
 import cn.fudata.qa.sms.dao.mapper.spcard10010.PortInfoMapper10010;
 import cn.fudata.qa.sms.dao.mapper.spcard10086.PortInfoMapper10086;
 import cn.fudata.qa.sms.dao.model.CardPosition;
@@ -20,7 +19,7 @@ import java.util.List;
 public class ManagerService {
 
     private final
-    CardPositionMapper cardPositionMapper;
+    CardPositionService cardPositionService;
 
     private final
     PortInfoMapper10010 portInfoMapper10010;
@@ -35,8 +34,8 @@ public class ManagerService {
     PhoneNumberService phoneNumberService;
 
     @Autowired
-    public ManagerService(CardPositionMapper cardPositionMapper, PortInfoMapper10010 portInfoMapper10010, PortInfoMapper10000 portInfoMapper10000, PortInfoMapper10086 portInfoMapper10086, PhoneNumberService phoneNumberService) {
-        this.cardPositionMapper = cardPositionMapper;
+    public ManagerService(CardPositionService cardPositionService, PortInfoMapper10010 portInfoMapper10010, PortInfoMapper10000 portInfoMapper10000, PortInfoMapper10086 portInfoMapper10086, PhoneNumberService phoneNumberService) {
+        this.cardPositionService = cardPositionService;
         this.portInfoMapper10010 = portInfoMapper10010;
         this.portInfoMapper10000 = portInfoMapper10000;
         this.portInfoMapper10086 = portInfoMapper10086;
@@ -74,7 +73,7 @@ public class ManagerService {
                 cardPosition.setIccid("");
                 cardPosition.setImsi("");
             }
-            cardPositionMapper.updateByPrimaryKey(cardPosition);
+            cardPositionService.updateByPrimaryKey(cardPosition, type);
         }
     }
 

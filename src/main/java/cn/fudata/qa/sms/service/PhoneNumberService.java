@@ -1,6 +1,6 @@
 package cn.fudata.qa.sms.service;
 
-import cn.fudata.qa.sms.dao.mapper.spcard.CardPositionMapper;
+
 import cn.fudata.qa.sms.dao.model.CardPosition;
 import cn.fudata.qa.sms.dao.model.CardPositionExample;
 import org.slf4j.Logger;
@@ -17,13 +17,9 @@ import java.util.List;
 
 @Service
 public class PhoneNumberService {
-    private final CardPositionMapper cardPositionMapper;
-
+//    private final CardPositionMapper cardPositionMapper;
     @Autowired
-    public PhoneNumberService(CardPositionMapper cardPositionMapper) {
-        this.cardPositionMapper = cardPositionMapper;
-    }
-
+    CardPositionService cardPositionService;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -37,7 +33,7 @@ public class PhoneNumberService {
         CardPositionExample example = new CardPositionExample();
         example.createCriteria().andPhonumEqualTo(phoNum);
 
-        List<CardPosition> list = cardPositionMapper.selectByExample(example);
+        List<CardPosition> list = cardPositionService.selectByExample(example);
         if (list == null || list.size() == 0) {
             return null;
         } else {
@@ -57,7 +53,7 @@ public class PhoneNumberService {
         CardPositionExample example = new CardPositionExample();
         example.createCriteria().andPhonumEqualTo(phoNum);
         try {
-            List<CardPosition> list = cardPositionMapper.selectByExample(example);
+            List<CardPosition> list = cardPositionService.selectByExample(example);
             return list.get(0);
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -69,7 +65,7 @@ public class PhoneNumberService {
     public List<CardPosition> get_phone_all() {
         CardPositionExample example = new CardPositionExample();
         example.createCriteria().andPortnumGreaterThan(0);
-        return cardPositionMapper.selectByExample(example);
+        return cardPositionService.selectByExample(example);
     }
 
     /**
@@ -83,7 +79,7 @@ public class PhoneNumberService {
         example.createCriteria()
                 .andTypeEqualTo(type.getCode())
                 .andPortnumGreaterThan(0);
-        return cardPositionMapper.selectByExample(example);
+        return cardPositionService.selectByExample(example);
     }
 
     /**
@@ -96,7 +92,7 @@ public class PhoneNumberService {
         CardPositionExample example = new CardPositionExample();
         example.createCriteria()
                 .andTypeEqualTo(type.getCode());
-        return cardPositionMapper.selectByExample(example);
+        return cardPositionService.selectByExample(example);
     }
 
 
@@ -105,7 +101,7 @@ public class PhoneNumberService {
         example.createCriteria()
                 .andProvinceEqualTo(province)
                 .andPortnumGreaterThan(0);
-        return cardPositionMapper.selectByExample(example);
+        return cardPositionService.selectByExample(example);
     }
 
     public List<CardPosition> get_phone_by_type_and_province(String type, String province) {
@@ -114,13 +110,13 @@ public class PhoneNumberService {
                 .andTypeEqualTo(type)
                 .andProvinceEqualTo(province)
                 .andPortnumGreaterThan(0);
-        return cardPositionMapper.selectByExample(example);
+        return cardPositionService.selectByExample(example);
     }
 
     public List<CardPosition> get_phone_detail(String phoNum) {
         CardPositionExample example = new CardPositionExample();
         example.createCriteria().andPhonumEqualTo(phoNum);
-        return cardPositionMapper.selectByExample(example);
+        return cardPositionService.selectByExample(example);
     }
 
 

@@ -9,7 +9,7 @@ Swagger 接口地址：http://lj-sms.info/swagger-ui.html
 
 ## 注意事项
 1. 每套软件配备单独的mysql库（移动、联通、电信各一套设备）
-2. mysql采用Docker创建，未做数据备份，初始化sql脚本见 `doc` 目录
+2. mysql未做数据备份，初始化sql脚本见 `doc` 目录
 
 ## 初始化猫池端口与卡对应关系：
 1. 首先插卡，操作新酷卡软件，至每个端口号正确识别出卡号
@@ -18,7 +18,7 @@ Swagger 接口地址：http://lj-sms.info/swagger-ui.html
 2. 执行初始化接口： POST：  http://lj-qa-sms.lj-qa.k2-test.lj.info/manager/init
 
 ## 初始化：
-1. K2上新建3个mysql实例，分别对应 移动、联通、电信，并初始化每个mysql的用户权限：
+1. 新建3个mysql实例，分别对应 移动、联通、电信，并初始化每个mysql的用户权限：
 ```
 1.mysql -uroot -proot
 2.create database spcard;
